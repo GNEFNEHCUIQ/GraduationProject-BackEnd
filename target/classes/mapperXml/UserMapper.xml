@@ -11,7 +11,7 @@
         <result property="role" column="role"/>
     </resultMap>
 
-    <select id="getUserById" parameterType="User" resultMap="userResultMap">
+    <select id="getUserById" resultMap="userResultMap">
         select * from user where uid=#{uid} and password=#{password}
     </select>
 

@@ -12,8 +12,21 @@ public class IndexController {
     @GetMapping("/")
     public String index(){
         //return "welcome to maker space";
-        /*return "index";*/
+        return "index";
 
-        return "hi!"+ userController.login(001,"admin");
+        //return "hi!"+ userController.login(001,"admin");
     }
+
+    @GetMapping("/toLoginPage")
+    public String toLoginPage(){
+        return "login";
+    }
+
+    @GetMapping("/toHomePage")
+    public String toHomePage(){
+        return "homePage";
+    }
+
+    @GetMapping("/toTeamPage")
+    public String toTeamPage(){return "teamPage/teamView";}
 }

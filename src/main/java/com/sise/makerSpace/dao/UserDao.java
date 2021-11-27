@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserDao {
     /*@Select("select * from user where uid=#{uid} and password=#{password}")*/
-    User getUserById(User user) ;
+    User getUserById(int uid,String password) ;
 }

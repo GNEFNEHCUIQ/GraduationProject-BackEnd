@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <script type="text/javascript" src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+</head>
+<body>
+<form action="/user/doLogin" METHOD="post">
+    uid：<input type="text" id="uid" name="uid" placeholder="请输入uid">
+    密码：<input type="password" id="password" name="password" placeholder="请输入密码">
+    <button id="sub">提交</button>
+</form>
+</body>
+<script>
+    $("#sub").on('click', function () {
+        $.ajax({
+            url: '/user/doLogin',
+            type: 'POST',
+            contentType : "application/json" ,
+            dataType : "json",
+            data: { //向请求传递的数据
+                "uid": $("#uid").val(),
+                "password": $("#password").val(),
+            },
+            async: true, //是否异步，默认为true
+            success: function (e) { //请求成功的回调函数，e为后台传递过来的信息
+                console.log(e)
+            },
+            error: function (e) { //请求失败的回调函数
+                console.log("ajax请求失败");
+            }
+        });
+    });
+</script>
+</html>

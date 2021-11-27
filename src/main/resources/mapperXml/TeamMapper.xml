@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sise.makerSpace.dao.TeamDao">
+
+    <resultMap type="TeamMember" id="teamMemberResultMap">
+        <id property="memberId" column="member_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="teamId" column="team_id"/>
+        <result property="role" column="role"/>
+    </resultMap>
+
+    <select id="findAllTeamMember" resultMap="teamMemberResultMap">
+        select * from teammember
+    </select>
+
+</mapper>
