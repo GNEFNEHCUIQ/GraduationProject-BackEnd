@@ -50,6 +50,14 @@ mybatis:
     level:
       com.sise.makerSpace.dao: debug
   configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     mapUnderscoreToCamelCase: true
+
+# pagehelper
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
 
 debug: true

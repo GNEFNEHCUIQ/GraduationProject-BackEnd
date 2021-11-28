@@ -10,4 +10,8 @@ import java.util.List;
 @Repository
 public interface ArticleDao {
     List<Article> findAllArticle();
+
+    List<Article> findLatestArticle();
+
+    List<Article> findLatestArticle(String sort,int pageIndex,int pageSize);
 }
