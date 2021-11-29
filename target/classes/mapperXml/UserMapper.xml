@@ -15,4 +15,12 @@
         select * from user where uid=#{uid} and password=#{password}
     </select>
 
+    <insert id="register" parameterType="User">
+        insert into user(uid,name,password,role) values (null,#{name},#{password},1)
+    </insert>
+
+    <select id="checkDuplicateName">
+        select 1 from user where name=#{name}
+    </select>
+
 </mapper>

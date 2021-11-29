@@ -24,24 +24,23 @@
         ORDER BY article_id DESC
     </select>
 
-    <select id="findLatestArticle" resultMap="articleMemberResultMap">
+
+
+    <select id="findArticle" resultMap="articleMemberResultMap">
         SELECT
         <include refid="article" />
         from article
-        <if test="null != sort and '' != sort">
-            sort=#{sort}
+        <if test="sort!=''">
+            where sort=#{sort}
         </if>
-        ORDER BY creation_time DESC
-        limit #{pageIndex},#{pageSize}   #真傻了 本来序号就和时间高度关联 直接序号DESC就行了
+        ORDER BY article_id DESC
     </select>
 
-    <select id="findLatestArticleOfSomeKind" resultMap="articleMemberResultMap">
-        SELECT
+    <insert id="addArticle">
+        insert into article(
         <include refid="article" />
-        from article
-        where sort=#{sort}
-        ORDER BY creation_time DESC
-        limit 0,5                          #应该是不用了吧
-    </select>
+        ) values
+        (null,#{sort},#{title},#{content},#{author},NOW())
+    </insert>
 
 </mapper>

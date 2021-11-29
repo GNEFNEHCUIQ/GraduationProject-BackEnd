@@ -3,6 +3,7 @@ package com.sise.makerSpace.controller;
 import com.github.pagehelper.PageHelper;
 import com.sise.makerSpace.domain.Article;
 import com.sise.makerSpace.domain.PageRequest;
+import com.sise.makerSpace.domain.PageResult;
 import com.sise.makerSpace.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,12 +24,26 @@ public class ArticleController {
     private ArticleService articleService;
 
     @PostMapping(value = "/findAllArticleWithPage") //result：pageNum,pageSize,totalPages,totalSize
-    public Object findAllArticleWithPage(@RequestParam("pageNum") int pageNum,@RequestParam("pageSize") int pageSize){
+    public PageResult findAllArticleWithPage(@RequestParam("pageNum") int pageNum,@RequestParam("pageSize") int pageSize){
         PageRequest pageRequest=new PageRequest(pageNum,pageSize);
         System.out.println("pageRequest"+pageRequest);
         return articleService.findAllArticleWithPage(pageRequest);
     }
 
+    @PostMapping(value = "/findArticle")   //没前端做不了阿
+    public PageResult findArticle(@RequestParam("sort")String sort, @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
+        System.out.println("sort:"+sort+",pageNum"+",pageSize:"+pageSize);
+        PageRequest pageRequest=new PageRequest(pageNum,pageSize);
+        System.out.println("pageRequest"+pageRequest);
+        return articleService.findArticle(sort,pageRequest);
+    }
+
+    @PostMapping(value = "/addArticle")
+    public void addArticle(@RequestParam("title") String title,@RequestParam("sort") String sort,@RequestParam("content") String content){
+        System.out.println("title:"+title+",sort:"+sort+",content:"+content);
+        int author=1;
+        articleService.addArticle(title,sort,content,author);
+    }
 
 
 }

@@ -27,4 +27,15 @@ public class UserController {
         //return "homePage";
     }
 
+    @PostMapping(value = "/doRegister")
+    public void register(@RequestBody User user){
+        if (this.checkDuplicateName(user.getName()))
+            return;
+        userService.register(user);
+    }
+
+    private boolean checkDuplicateName(String name){
+        return userService.checkDuplicateName(name);
+    }
+
 }

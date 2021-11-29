@@ -16,4 +16,17 @@ public class UserServiceImpl implements UserService {
     public User getUserById(int uid,String password){
         return userDao.getUserById(uid,password);
     }
+
+    @Override
+    public void register(User user) {
+        userDao.register(user);
+    }
+
+    @Override
+    public boolean checkDuplicateName(String name) {
+        if (userDao.checkDuplicateName(name))
+            return true;
+        else
+            return false;
+    }
 }

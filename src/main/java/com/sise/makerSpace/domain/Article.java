@@ -12,4 +12,5 @@ public class Article {
     private String content;
     private String author;
     private String creationTime;
+
 }
