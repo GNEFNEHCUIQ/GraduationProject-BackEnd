@@ -5,12 +5,12 @@
 <mapper namespace="com.sise.makerSpace.dao.ArticleDao">
 
     <resultMap type="Article" id="articleMemberResultMap">
-        <id property="articleId" column="article_id"/>
+        <id property="article_id" column="article_id"/>
         <result property="sort" column="sort"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="author" column="author"/>
-        <result property="creationTime" column="creation_time"/>
+        <result property="creation_time" column="creation_time"/>
     </resultMap>
 
     <sql id="article">

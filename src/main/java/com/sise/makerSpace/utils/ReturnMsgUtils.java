@@ -70,8 +70,6 @@ public class ReturnMsgUtils implements Serializable {
         return this;
     }
 
-
-
     public Integer getFlag() {
         return flag;
     }

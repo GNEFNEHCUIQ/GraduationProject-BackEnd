@@ -12,7 +12,7 @@
     </resultMap>
 
     <resultMap type="Resume" id="UserInfoMap" >
-        <id property="resumeId" column="resume_id"/>
+        <id property="resume_id" column="resume_id"/>
         <result property="age" column="age"/>
         <result property="gender" column="gender"/>
         <result property="real_name" column="real_name"/>
@@ -20,9 +20,9 @@
         <result property="education" column="education"/>
         <result property="school" column="school"/>
         <result property="experience" column="experience"/>
-        <result property="selfAssessment" column="self_assessment"/>
+        <result property="self_assessment" column="self_assessment"/>
         <association property="user" javaType="user">
-            <id property="userId" column="user_id"/>
+            <id property="user_id" column="user_id"/>
             <result property="password" column="password"/>
             <result property="name" column="name"/>
         </association>
@@ -48,6 +48,14 @@
 
     <insert id="createResumeByName">
         insert into resume (resume_id,user_id) values (null,(select user_id from user where name=#{name}))
+    </insert>
+
+    <select id="isTeacher" parameterType="int" resultType="java.lang.Integer">
+        select count(*) from role_of_user where user_id=#{user_id} and role_id=3
+    </select>
+
+    <insert id="certifiedAsTeacher">
+        insert into review_certified_As_Teacher(applicant_id,approved,creation_time) values (#{user_id},0,now())
     </insert>
 
 </mapper>

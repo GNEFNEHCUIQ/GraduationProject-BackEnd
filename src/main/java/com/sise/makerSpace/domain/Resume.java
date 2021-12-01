@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class Resume {
     private Integer resumeId;
-    private Integer uid;
+    private Integer userId;
     private String realName;
     private String gender;
     private String birthday;
@@ -35,12 +35,12 @@ public class Resume {
         this.user = user;
     }
 
-    public int getUser_id() {
+    public int getUserId() {
         return user.getUserId();
     }
 
-    public void setUser_id(int user_id) {
-        user.setUserId(user_id);
+    public void setUserId(int userId) {
+        user.setUserId(userId);
     }
 
     public String getPassword() {

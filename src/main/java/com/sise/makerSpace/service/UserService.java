@@ -17,4 +17,8 @@ public interface UserService {
     List<Resume> getUserInfoByUserId(int uid);
 
     void createResumeByName(String name);
+
+    boolean isTeacher(int user_id);
+
+    void certifiedAsTeacher(int user_id);
 }

@@ -51,7 +51,7 @@ mybatis:
       com.sise.makerSpace.dao: debug
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    mapUnderscoreToCamelCase: true
+    mapUnderscoreToCamelCase: false
 
 # pagehelper
 pagehelper:

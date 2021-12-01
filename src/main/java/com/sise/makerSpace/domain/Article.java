@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 @Data
 @Repository
 public class Article {
-    private int articleId;
+    private int article_id;
     private String sort;
     private String title;
     private String content;

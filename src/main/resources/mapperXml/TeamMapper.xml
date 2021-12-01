@@ -15,4 +15,32 @@
         select * from teammember
     </select>
 
+    <insert id="applyToCreateATeam" parameterType="Team">
+        INSERT INTO Review_CreateTeam (
+            applicant_id,
+            team_name,
+            category,
+            teacher_id,
+            team_describe,
+            handler_id,
+            approved,
+            creation_time
+        )
+        VALUES
+        (
+            #{leader_id},
+            #{team_name},
+            #{category},
+            #{teacher_id},
+            #{team_describe},
+            null,
+            0,
+            NOW()
+        )
+    </insert>
+
+    <select id="getTeamInfo" parameterType="int" resultType="Team">
+        select * from team where team_id=#{user_id}
+    </select>
+
 </mapper>

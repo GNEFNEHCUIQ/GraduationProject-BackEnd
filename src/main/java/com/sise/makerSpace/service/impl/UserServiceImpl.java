@@ -44,4 +44,17 @@ public class UserServiceImpl implements UserService {
     public void createResumeByName(String name) {
         userDao.createResumeByName(name);
     }
+
+    @Override
+    public boolean isTeacher(int user_id) {
+        if (userDao.isTeacher(user_id)==0)
+            return false;
+        else
+            return true;
+    }
+
+    @Override
+    public void certifiedAsTeacher(int user_id) {
+        userDao.certifiedAsTeacher(user_id);
+    }
 }

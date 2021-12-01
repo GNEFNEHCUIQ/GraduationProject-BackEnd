@@ -22,4 +22,8 @@ public interface UserDao {
     List<Resume> getUserInfoByUserId(int user_id);
 
     void createResumeByName(String name);
+
+    Integer isTeacher(Integer user_id);
+
+    void certifiedAsTeacher(int user_id);
 }
