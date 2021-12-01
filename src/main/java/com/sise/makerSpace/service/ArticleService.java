@@ -18,4 +18,8 @@ public interface ArticleService {
     PageResult findArticle(String sort, PageRequest pageRequest);
 
     void addArticle(String title, String sort, String content,int author);
+
+    void delArticle(int article_id);
+
+    boolean ifArticleExist(int article_id);
 }

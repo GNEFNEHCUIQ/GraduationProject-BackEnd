@@ -5,6 +5,7 @@ import com.sise.makerSpace.domain.Article;
 import com.sise.makerSpace.domain.PageRequest;
 import com.sise.makerSpace.domain.PageResult;
 import com.sise.makerSpace.service.ArticleService;
+import com.sise.makerSpace.utils.ReturnMsgUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,8 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+
+
 
     @PostMapping(value = "/findAllArticleWithPage") //result：pageNum,pageSize,totalPages,totalSize
     public PageResult findAllArticleWithPage(@RequestParam("pageNum") int pageNum,@RequestParam("pageSize") int pageSize){
@@ -44,6 +47,19 @@ public class ArticleController {
         int author=1;
         articleService.addArticle(title,sort,content,author);
     }
+
+    @PostMapping(value = "/delArticle")
+    public ReturnMsgUtils delArticle(@RequestParam("article_id")int article_id){
+        ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
+        System.out.println("article_id"+article_id);
+        if (articleService.ifArticleExist(article_id)){
+            return returnMsgUtils.fail("文章不存在");
+        }else {
+            articleService.delArticle(article_id);
+            return returnMsgUtils.success("删除成功");
+        }
+    }
+
 
 
 }

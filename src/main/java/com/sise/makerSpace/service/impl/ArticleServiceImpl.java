@@ -55,5 +55,18 @@ public class ArticleServiceImpl implements ArticleService {
          articleDao.addArticle(title,sort,content,author);
     }
 
+    @Override
+    public void delArticle(int article_id) {
+        articleDao.delArticle(article_id);
+    }
+
+    @Override
+    public boolean ifArticleExist(int article_id) {
+        if (articleDao.ifArticleExist(article_id)==1)
+        return true;
+        else
+            return false;
+    }
+
 
 }

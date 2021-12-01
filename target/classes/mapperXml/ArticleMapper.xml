@@ -43,4 +43,12 @@
         (null,#{sort},#{title},#{content},#{author},NOW())
     </insert>
 
+    <delete id="delArticle">
+        delete from article where article_id=#{article_id}
+    </delete>
+
+    <select id="ifArticleExist" resultType="Integer">
+        select 1 from article where article_id=#{article_id}
+    </select>
+
 </mapper>

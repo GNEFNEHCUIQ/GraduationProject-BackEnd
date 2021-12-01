@@ -1,8 +1,13 @@
 package com.sise.makerSpace.dao;
 
+import com.sise.makerSpace.domain.Resume;
 import com.sise.makerSpace.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -12,5 +17,9 @@ public interface UserDao {
 
     void register(User user);
 
-    boolean checkDuplicateName(String name);
+    User checkDuplicateName(String name);
+
+    List<Resume> getUserInfoByUserId(int user_id);
+
+    void createResumeByName(String name);
 }

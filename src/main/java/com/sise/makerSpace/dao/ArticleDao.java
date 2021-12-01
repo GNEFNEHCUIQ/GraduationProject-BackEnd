@@ -18,4 +18,8 @@ public interface ArticleDao {
     List<Article> findArticle(String sort);
 
     void addArticle(String title, String sort, String content,int author);
+
+    void delArticle(int article_id);
+
+    Integer ifArticleExist(int article_id);
 }

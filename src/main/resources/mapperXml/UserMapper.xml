@@ -5,22 +5,49 @@
 <mapper namespace="com.sise.makerSpace.dao.UserDao">
 
     <resultMap type="User" id="userResultMap">
-        <id property="uid" column="uid"/>
+        <id property="userId" column="user_id"/>
         <result property="password" column="password"/>
         <result property="name" column="name"/>
         <result property="role" column="role"/>
+    </resultMap>
+
+    <resultMap type="Resume" id="UserInfoMap" >
+        <id property="resumeId" column="resume_id"/>
+        <result property="age" column="age"/>
+        <result property="gender" column="gender"/>
+        <result property="real_name" column="real_name"/>
+        <result property="phone" column="phone"/>
+        <result property="education" column="education"/>
+        <result property="school" column="school"/>
+        <result property="experience" column="experience"/>
+        <result property="selfAssessment" column="self_assessment"/>
+        <association property="user" javaType="user">
+            <id property="userId" column="user_id"/>
+            <result property="password" column="password"/>
+            <result property="name" column="name"/>
+        </association>
     </resultMap>
 
     <select id="getUserById" resultMap="userResultMap">
         select * from user where uid=#{uid} and password=#{password}
     </select>
 
+    <select id="getUserInfoByUserId" resultMap="UserInfoMap">
+        select
+            r.resume_id,r.age,r.gender,r.real_name,r.phone,r.education,r.school,r.experience,r.self_assessment,u.user_id,u.password,u.name
+        from user u,resume r where  r.user_id=u.user_id and r.user_id=#{user_id}
+    </select>
+
     <insert id="register" parameterType="User">
-        insert into user(uid,name,password,role) values (null,#{name},#{password},1)
+        insert into user(user_id,name,password,role) values (null,#{name},#{password},1)
     </insert>
 
-    <select id="checkDuplicateName">
-        select 1 from user where name=#{name}
+    <select id="checkDuplicateName" resultType="User">
+        select user_id from user where name=#{name}
     </select>
+
+    <insert id="createResumeByName">
+        insert into resume (resume_id,user_id) values (null,(select user_id from user where name=#{name}))
+    </insert>
 
 </mapper>
