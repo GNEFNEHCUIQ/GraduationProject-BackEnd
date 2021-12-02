@@ -41,24 +41,8 @@ public class ArticleController {
         return articleService.findArticle(sort,pageRequest);
     }
 
-    @PostMapping(value = "/addArticle")
-    public void addArticle(@RequestParam("title") String title,@RequestParam("sort") String sort,@RequestParam("content") String content){
-        System.out.println("title:"+title+",sort:"+sort+",content:"+content);
-        int author=1;
-        articleService.addArticle(title,sort,content,author);
-    }
 
-    @PostMapping(value = "/delArticle")
-    public ReturnMsgUtils delArticle(@RequestParam("article_id")int article_id){
-        ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
-        System.out.println("article_id"+article_id);
-        if (articleService.ifArticleExist(article_id)){
-            return returnMsgUtils.fail("文章不存在");
-        }else {
-            articleService.delArticle(article_id);
-            return returnMsgUtils.success("删除成功");
-        }
-    }
+
 
 
 

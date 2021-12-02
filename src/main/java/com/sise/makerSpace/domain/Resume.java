@@ -59,12 +59,4 @@ public class Resume {
         user.setName(name);
     }
 
-    public String getRole() {
-        return user.getRole();
-    }
-
-    public void setRole(String role) {
-        user.setRole(role);
-    }
-
 }

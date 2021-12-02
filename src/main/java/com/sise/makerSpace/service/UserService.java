@@ -21,4 +21,8 @@ public interface UserService {
     boolean isTeacher(int user_id);
 
     void certifiedAsTeacher(int user_id);
+
+    boolean alreadyCommitTeacherApply(int user_id);
+
+    void initROU(String name);
 }

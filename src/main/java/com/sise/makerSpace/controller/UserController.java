@@ -33,13 +33,16 @@ public class UserController {
 
     @GetMapping(value = "/certifiedAsTeacher")
     public ReturnMsgUtils certifiedAsTeacher(@RequestParam("user_id")int user_id){
-        if (!userService.isTeacher(user_id)) {
+        if (userService.isTeacher(user_id)) {
+            System.out.println("userService.isTeacher(user_id)::"+userService.isTeacher(user_id));
+            return returnMsgUtils.fail("你已经是老师啦，无需重复认证");
+        }else if(userService.alreadyCommitTeacherApply(user_id)){
+            return returnMsgUtils.fail("你已提交申请，无需重复提交。");
+        }
+        else {
             System.out.println("userService.isTeacher(user_id)::"+userService.isTeacher(user_id));
             userService.certifiedAsTeacher(user_id);
             return returnMsgUtils.success("申请提交成功");
-        }else{
-            System.out.println("userService.isTeacher(user_id)::"+userService.isTeacher(user_id));
-            return returnMsgUtils.fail("你已经是老师啦，无需重复认证");
         }
     }
 

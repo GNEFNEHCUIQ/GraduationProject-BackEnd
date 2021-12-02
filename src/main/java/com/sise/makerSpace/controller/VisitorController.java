@@ -27,7 +27,7 @@ public class VisitorController {
     public User login(@RequestParam("uid") int uid,
                         @RequestParam("password") String password){
         User user=userService.getUserById(uid,password);
-        System.out.println("uid:"+user.getUserId()+",password:"+user.getPassword()+",name:"+user.getName()+",role:"+user.getRole());
+        System.out.println("uid:"+user.getUserId()+",password:"+user.getPassword()+",name:"+user.getName());
         return user;
     }
 
@@ -44,6 +44,7 @@ public class VisitorController {
             //createResumeByName(user.getName());
             userService.createResumeByName(user.getName());
             //System.out.println("success");
+            userService.initROU(user.getName());
             return returnMsgUtils.success("注册成功");
         }
     }

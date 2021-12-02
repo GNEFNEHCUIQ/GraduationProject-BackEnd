@@ -8,7 +8,6 @@
         <id property="userId" column="user_id"/>
         <result property="password" column="password"/>
         <result property="name" column="name"/>
-        <result property="role" column="role"/>
     </resultMap>
 
     <resultMap type="Resume" id="UserInfoMap" >
@@ -39,7 +38,7 @@
     </select>
 
     <insert id="register" parameterType="User">
-        insert into user(user_id,name,password,role) values (null,#{name},#{password},1)
+        insert into user(user_id,name,password) values (null,#{name},#{password})
     </insert>
 
     <select id="checkDuplicateName" resultType="User">
@@ -54,8 +53,16 @@
         select count(*) from role_of_user where user_id=#{user_id} and role_id=3
     </select>
 
+    <select id="alreadyCommitTeacherApply" resultType="int">
+        select count(*) from review_certified_As_Teacher where applicant_id=#{user_id} and approved=0
+    </select>
+
     <insert id="certifiedAsTeacher">
-        insert into review_certified_As_Teacher(applicant_id,approved,creation_time) values (#{user_id},0,now())
+        insert into review_certified_As_Teacher(applicant_id,handler_id,approved,creation_time) values (#{user_id},-1,0,now())
+    </insert>
+
+    <insert id="initROU">
+        insert into role_of_user(user_id,role_id) values ((select user_id from user where name=#{name}),1)
     </insert>
 
 </mapper>

@@ -57,4 +57,18 @@ public class UserServiceImpl implements UserService {
     public void certifiedAsTeacher(int user_id) {
         userDao.certifiedAsTeacher(user_id);
     }
+
+    @Override
+    public boolean alreadyCommitTeacherApply(int user_id) {
+        if (userDao.alreadyCommitTeacherApply(user_id)!=0)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public void initROU(String name) {
+        userDao.initROU(name);
+    }
+
 }

@@ -26,4 +26,8 @@ public interface UserDao {
     Integer isTeacher(Integer user_id);
 
     void certifiedAsTeacher(int user_id);
+
+    int alreadyCommitTeacherApply(int user_id);
+
+    void initROU(String name);
 }
