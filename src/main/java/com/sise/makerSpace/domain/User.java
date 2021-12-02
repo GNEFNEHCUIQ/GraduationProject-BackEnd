@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @AllArgsConstructor
 @Repository
 public class User {
-        private int userId;
+        private int user_id;
         private String password;
         private String name;
 }

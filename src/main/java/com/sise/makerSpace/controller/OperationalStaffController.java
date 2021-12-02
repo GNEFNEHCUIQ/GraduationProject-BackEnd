@@ -2,9 +2,8 @@ package com.sise.makerSpace.controller;
 
 import com.sise.makerSpace.domain.ReviewCertifiedAsTeacher;
 import com.sise.makerSpace.domain.ReviewCreateTeam;
-import com.sise.makerSpace.service.ArticleService;
-import com.sise.makerSpace.service.OperationalStaffService;
-import com.sise.makerSpace.service.RoleService;
+import com.sise.makerSpace.domain.Team;
+import com.sise.makerSpace.service.*;
 import com.sise.makerSpace.utils.ReturnMsgUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,13 @@ public class OperationalStaffController {
     private RoleService roleService;
 
     @Autowired
+    private TeamService teamService;
+
+    @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
 
@@ -43,16 +48,21 @@ public class OperationalStaffController {
         }
     }
 
+    @GetMapping(value = "/findUnreviewedCATA")
+    public ReturnMsgUtils findUnreviewedCATA(){
+        return returnMsgUtils.success("还没做！");
+    }
+
     @GetMapping("/findAllCATApplication")
     public ReturnMsgUtils findAllCATApplication(){
         //Review_certified_as_teacher;
-        operationalStaffService.findAllCATApplication();
-        return returnMsgUtils.setData(operationalStaffService.findAllCATApplication());
+        //operationalStaffService.findAllCATApplication();
+        return returnMsgUtils.setData(reviewService.findAllCATApplication());
     }
 
     @PutMapping(value = "/reviewCATApplication")
     public ReturnMsgUtils reviewCATApplication(@RequestBody ReviewCertifiedAsTeacher reviewCertifiedAsTeacher){
-        operationalStaffService.reviewCATApplication(
+        reviewService.reviewCATApplication(
                 reviewCertifiedAsTeacher.getReview_id(),
                 reviewCertifiedAsTeacher.getHandler_id(),
                 reviewCertifiedAsTeacher.getApproved());
@@ -65,19 +75,31 @@ public class OperationalStaffController {
         }
     }
 
+    @GetMapping("/findUnreviewedCTA")   //一定要老师那边t_approved为-1才select进去
+    public ReturnMsgUtils findUnreviewedCTA(){
+        return returnMsgUtils.success("还没做！");
+    }
+
+    @GetMapping("/findAllCTA")
+    public ReturnMsgUtils findAllCTA(){
+        return returnMsgUtils.success("还没做！");
+    }
+
     @PutMapping(value = "reviewCTApplication")
-    public ReturnMsgUtils reviewCTApplication(@RequestBody ReviewCreateTeam reviewCreateTeam) {
-        operationalStaffService.reviewCTApplication(
-                reviewCreateTeam.getReview_id(),
-                reviewCreateTeam.getHandler_id(),
-                reviewCreateTeam.getApproved()
-        );
-        if (reviewCreateTeam.getApproved() == -1) {
+    public ReturnMsgUtils reviewCTApplication(@RequestParam("review_id")int review_id,@RequestParam("handler_id")int handler_id,@RequestParam("approved")int approved) {
+        reviewService.reviewCTApplication(review_id,handler_id,approved);
+        if (approved == -1) {
             //发消息说没通过？
             return returnMsgUtils.success("审核成功！该用户未通过审核！");
-        } else {
-            //roleService.addTeam(reviewCreateTeam.getApplicant_id(),3);
-            return returnMsgUtils.success("审批成功！");
+        } else {    //insert into team (team_name,category,teacher_id,leader_id,team_describe) values (1,2,3,4,5)
+            Team newTeam=teamService.getTeamInfoFromReviewId(review_id);
+            teamService.addTeam(
+                    newTeam.getTeam_name(),
+                    newTeam.getCategory(),
+                    newTeam.getTeacher_id(),
+                    newTeam.getLeader_id(),
+                    newTeam.getTeam_describe());
+            return returnMsgUtils.success("审批成功！已自动创建团队："+newTeam.getTeam_name());
         }
     }
 

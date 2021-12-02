@@ -5,9 +5,9 @@
 <mapper namespace="com.sise.makerSpace.dao.TeamDao">
 
     <resultMap type="TeamMember" id="teamMemberResultMap">
-        <id property="memberId" column="member_id"/>
-        <result property="userId" column="user_id"/>
-        <result property="teamId" column="team_id"/>
+        <id property="member_id" column="member_id"/>
+        <result property="user_id" column="user_id"/>
+        <result property="team_id" column="team_id"/>
         <result property="role" column="role"/>
     </resultMap>
 
@@ -16,31 +16,49 @@
     </select>
 
     <insert id="applyToCreateATeam" parameterType="Team">
-        INSERT INTO Review_CreateTeam (
-            applicant_id,
-            team_name,
-            category,
-            teacher_id,
-            team_describe,
-            handler_id,
-            approved,
-            creation_time
+        INSERT INTO review_create_team (
+                                        review_id,
+                                        applicant_id,
+                                        team_name,
+                                        category,
+                                        teacher_id,
+                                        t_approved,
+                                        team_describe,
+                                        handler_id,
+                                        h_approved,
+                                        creation_time,
+                                        handling_time
         )
         VALUES
         (
+            null,
             #{leader_id},
             #{team_name},
             #{category},
             #{teacher_id},
-            #{team_describe},
-            null,
             0,
-            NOW()
+            #{team_describe},
+            -1,
+            0,
+            NOW(),
+            null
         )
     </insert>
 
     <select id="getTeamInfo" parameterType="int" resultType="Team">
         select * from team where team_id=#{user_id}
+    </select>
+
+    <insert id="addTeam">
+        insert into team (team_name,category,teacher_id,leader_id,team_describe)
+        values
+               (#{team_name},#{category},#{teacher_id},#{applicant_id},#{team_describe})
+    </insert>
+
+    <select id="getTeamInfoFromReviewId" resultType="Team">
+        select
+               team_name,category,teacher_id,applicant_id as "leader_id",team_describe
+        from review_create_team where review_id=#{review_id}
     </select>
 
 </mapper>

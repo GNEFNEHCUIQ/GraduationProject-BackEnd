@@ -1,5 +1,6 @@
 package com.sise.makerSpace.dao;
 
+import com.sise.makerSpace.domain.ReviewCreateTeam;
 import com.sise.makerSpace.domain.Team;
 import com.sise.makerSpace.domain.TeamMember;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,4 +16,9 @@ public interface TeamDao {
     void applyToCreateATeam(Team team);
 
     Team getTeamInfo(int team_id);
+
+    void addTeam(String team_name, String category, int teacher_id, int applicant_id, String team_describe);
+
+    Team getTeamInfoFromReviewId(int review_id);
+
 }

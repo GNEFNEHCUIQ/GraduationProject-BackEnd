@@ -35,12 +35,12 @@ public class Resume {
         this.user = user;
     }
 
-    public int getUserId() {
-        return user.getUserId();
+    public int getUser_id() {
+        return user.getUser_id();
     }
 
-    public void setUserId(int userId) {
-        user.setUserId(userId);
+    public void setUserId(int user_id) {
+        user.setUser_id(user_id);
     }
 
     public String getPassword() {

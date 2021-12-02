@@ -27,7 +27,7 @@ public class VisitorController {
     public User login(@RequestParam("uid") int uid,
                         @RequestParam("password") String password){
         User user=userService.getUserById(uid,password);
-        System.out.println("uid:"+user.getUserId()+",password:"+user.getPassword()+",name:"+user.getName());
+        System.out.println("uid:"+user.getUser_id()+",password:"+user.getPassword()+",name:"+user.getName());
         return user;
     }
 

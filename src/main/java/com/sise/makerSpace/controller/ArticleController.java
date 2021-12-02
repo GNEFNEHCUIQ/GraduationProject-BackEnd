@@ -33,7 +33,7 @@ public class ArticleController {
         return articleService.findAllArticleWithPage(pageRequest);
     }
 
-    @PostMapping(value = "/findArticle")   //没前端做不了阿
+    @PostMapping(value = "/findArticleBySort")   //没前端做不了阿
     public PageResult findArticle(@RequestParam("sort")String sort, @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
         System.out.println("sort:"+sort+",pageNum"+",pageSize:"+pageSize);
         PageRequest pageRequest=new PageRequest(pageNum,pageSize);

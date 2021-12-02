@@ -4,15 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sise.makerSpace.dao.OperationalStaffDao">
 
-    <select id="findAllCATApplication" resultType="ReviewCertifiedAsTeacher">
-        select * from Review_certified_as_teacher
-    </select>
 
-    <update id="reviewCATApplication">
-        update review_certified_As_Teacher set handler_id=#{handler_id} ,approved=#{approved},handling_time=now() where review_id=#{review_id}
-    </update>
 
-    <update id="reviewCTApplication">
-        update review_create_team set handler_id=#{handler_id} ,approved=#{approved},handling_time=now() where review_id=#{review_id}
-    </update>
 </mapper>

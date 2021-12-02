@@ -11,4 +11,5 @@ public class ReviewCertifiedAsTeacher {
     private int handler_id;
     private int approved;
     private String creation_time;
+    private String handling_time;
 }

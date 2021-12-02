@@ -17,8 +17,9 @@ public class TeamUserController {
 
     @PostMapping(value = "/applyToCreateATeam")
     public ReturnMsgUtils applyToCreateATeam(@RequestBody Team team){
+        //重复检查
         teamService.applyToCreateATeam(team);
-        return returnMsgUtils.success("申请成功，请等待管理员审批");
+        return returnMsgUtils.success("申请成功，请等待老师与管理员审批");
     }
 
 

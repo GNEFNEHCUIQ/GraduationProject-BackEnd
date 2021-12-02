@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sise.makerSpace.dao.ReviewDao">
+    <!--老师使用的-->
+    <select id="findATeachersUnreviewedCTA" resultType="ReviewCreateTeam">
+        select * from Review_create_team where teacher_id=#{teacher_id} and t_approved=0
+    </select>
+
+    <select id="findATeachersAllCATA">
+        select * from Review_create_team where teacher_id=#{teacher_id}
+    </select>
+
+    <update id="reviewTeacherCTA">
+        update review_create_team set teacher_id=#{teacher_id} ,t_approved=#{approved},handling_time=now() where review_id=#{review_id}
+    </update>
+
+
+    <!--以下是运营人员的-->
+
+    <select id="findAllCATApplication" resultType="ReviewCertifiedAsTeacher">
+        select * from Review_certified_as_teacher
+    </select>
+
+    <update id="reviewCATApplication">
+        update review_certified_As_Teacher set handler_id=#{handler_id} ,h_approved=#{approved},handling_time=now() where review_id=#{review_id}
+    </update>
+
+    <update id="reviewCTApplication">
+        update review_create_team set handler_id=#{handler_id} ,h_approved=#{approved},handling_time=now() where review_id=#{review_id}
+    </update>
+
+
+
+</mapper>

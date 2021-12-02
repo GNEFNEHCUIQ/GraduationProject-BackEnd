@@ -15,9 +15,11 @@ public class ReviewCreateTeam {
     private String team_name;
     private String category;
     private int teacher_id;
+    private int t_approved;
     private String team_describe;
     private int handler_id;
-    private int approved;
+    private int h_approved;
     private String creation_time;
+    private String handling_time;
 
 }

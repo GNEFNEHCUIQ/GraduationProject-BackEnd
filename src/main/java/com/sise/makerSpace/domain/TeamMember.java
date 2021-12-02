@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 @Data
 @Repository
 public class TeamMember {
-        private int memberId;
-        private int userId;
-        private int teamId;
+        private int member_id;
+        private int user_id;
+        private int team_id;
         private String role;
 
 }
