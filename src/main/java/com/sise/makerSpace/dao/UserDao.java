@@ -13,7 +13,7 @@ import java.util.Map;
 @Repository
 public interface UserDao {
     /*@Select("select * from user where uid=#{uid} and password=#{password}")*/
-    User getUserById(int uid,String password) ;
+    User getUserById(String uid, String password) ;
 
     void register(User user);
 
@@ -30,4 +30,6 @@ public interface UserDao {
     int alreadyCommitTeacherApply(int user_id);
 
     void initROU(String name);
+
+    User getUserByUserName(String user_name);
 }

@@ -5,7 +5,7 @@
 <mapper namespace="com.sise.makerSpace.dao.UserDao">
 
     <resultMap type="User" id="userResultMap">
-        <id property="userId" column="user_id"/>
+        <id property="user_id" column="user_id"/>
         <result property="password" column="password"/>
         <result property="name" column="name"/>
     </resultMap>
@@ -27,8 +27,8 @@
         </association>
     </resultMap>
 
-    <select id="getUserById" resultMap="userResultMap">
-        select * from user where uid=#{uid} and password=#{password}
+    <select id="getUserByUserName" resultMap="userResultMap">
+        select * from user where user_name=#{user_name}
     </select>
 
     <select id="getUserInfoByUserId" resultMap="UserInfoMap">

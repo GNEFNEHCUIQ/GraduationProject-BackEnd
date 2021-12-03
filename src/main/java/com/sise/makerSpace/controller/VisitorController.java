@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -24,17 +25,22 @@ public class VisitorController {
 
 
     @PostMapping(value = "/doLogin")
-    public User login(@RequestParam("uid") int uid,
+    public User doLogin(@RequestParam("user_name") String user_name,
                         @RequestParam("password") String password){
-        User user=userService.getUserById(uid,password);
-        System.out.println("uid:"+user.getUser_id()+",password:"+user.getPassword()+",name:"+user.getName());
+        User user=userService.getUserByUserName(user_name,password);
+        System.out.println("user_name:"+user.getUsername()+",password:"+user.getPassword()+",name:"+user.getUsername());
         return user;
     }
 
-    @PostMapping(value = "/doRegister")
+    @PostMapping("/login")
+    public ReturnMsgUtils login(@RequestBody User user, HttpServletRequest request){
+        return userService.login(user.getUser_name(),user.getPassword(),request);
+    }
+
+    @PostMapping(value = "/register")
     public ReturnMsgUtils register(@RequestBody User user){
         //ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
-        if (userService.checkDuplicateName(user.getName())) {   //if user exist
+        if (userService.checkDuplicateName(user.getUsername())) {   //if user exist
             //System.out.println("fail");
             return returnMsgUtils.fail("the username already exist");
         } /*else if(user.getName()) {
@@ -42,13 +48,17 @@ public class VisitorController {
         }*/else {
             userService.register(user);
             //createResumeByName(user.getName());
-            userService.createResumeByName(user.getName());
+            userService.createResumeByName(user.getUsername());
             //System.out.println("success");
-            userService.initROU(user.getName());
+            userService.initROU(user.getUsername());
             return returnMsgUtils.success("注册成功");
         }
     }
 
+    @PostMapping("/logout")
+    public ReturnMsgUtils logout(){
+        return returnMsgUtils.success("注销成功！");
+    }
 
 
 }

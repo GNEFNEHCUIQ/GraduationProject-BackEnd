@@ -1,12 +1,21 @@
 package com.sise.makerSpace.service.impl;
 
+import com.sise.makerSpace.config.JwtTokenConfig;
 import com.sise.makerSpace.domain.Resume;
 import com.sise.makerSpace.domain.User;
 import com.sise.makerSpace.dao.UserDao;
 import com.sise.makerSpace.service.UserService;
+import com.sise.makerSpace.utils.ReturnMsgUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +26,50 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtTokenConfig jwtTokenConfig;
+
+    @Value("${jwt.tokenHead}")
+    private String tokenHead;
+
+    private ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
+
     @Override
-    public User getUserById(int uid,String password){
-        return userDao.getUserById(uid,password);
+    public User getUserByUserName(String user_name,String password){
+        return userDao.getUserById(user_name,password);
+    }
+
+    @Override
+    public User getUserByUserName(String user_name){
+        return userDao.getUserByUserName(user_name);
+    }
+
+    @Override
+    public ReturnMsgUtils login(String user_name, String password, HttpServletRequest request) {
+        UserDetails userDetails=userDetailsService.loadUserByUsername(user_name);
+        String encode = passwordEncoder.encode(userDetails.getPassword());
+        if (null==userDetails || !passwordEncoder.matches(password,encode)){
+            System.out.println("userDetails:"+userDetails);
+            System.out.println("password:"+password);
+            System.out.println("pencode:"+encode);
+            System.out.println("passwordEncoder.matches:"+passwordEncoder.matches(password,userDetails.getPassword()));
+            return returnMsgUtils.fail("用户名或密码不正确");
+        }
+        UsernamePasswordAuthenticationToken authenticationToken=new
+                UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+        String token=jwtTokenConfig.generateToken(userDetails);
+        Map<String,String> tokenMap=new HashMap<>();
+        tokenMap.put("token",token);
+        tokenMap.put("tokenHead",tokenHead);
+        return returnMsgUtils.setData(tokenMap);
     }
 
     @Override

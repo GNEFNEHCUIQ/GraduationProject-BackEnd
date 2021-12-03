@@ -52,11 +52,11 @@ public class Resume {
     }
 
     public String getName() {
-        return user.getName();
+        return user.getUsername();
     }
 
     public void setName(String name) {
-        user.setName(name);
+        user.setUser_name(name);
     }
 
 }

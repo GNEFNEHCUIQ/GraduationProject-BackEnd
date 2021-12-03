@@ -2,11 +2,13 @@ package com.sise.makerSpace.controller;
 
 import com.sise.makerSpace.domain.Resume;
 import com.sise.makerSpace.domain.Team;
+import com.sise.makerSpace.domain.User;
 import com.sise.makerSpace.service.UserService;
 import com.sise.makerSpace.utils.ReturnMsgUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -29,6 +31,17 @@ public class UserController {
         }else {
             return returnMsgUtils.setData(resumeList);
         }
+    }
+
+    @GetMapping("/getUserInfoByPrincipal")
+    public User getUserInfo(Principal principal){
+        if (null==principal){
+            return null;
+        }
+        String user_name=principal.getName();
+        User user=userService.getUserByUserName(user_name);
+        user.setPassword(null);
+        return user;
     }
 
     @GetMapping(value = "/certifiedAsTeacher")

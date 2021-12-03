@@ -17,10 +17,7 @@ spring:
       connection-timeout: 30000
       connection-test-query: SELECT 1
 
-  security:
-    user:
-    name: admin
-    password: admin
+
 
   jpa:
     showSql: true
@@ -61,3 +58,13 @@ pagehelper:
   params: count=countSql
 
 debug: true
+
+
+jwt:
+  tokenHeader: Authorization
+  secret: ms-secret
+  expiration: 604800
+  tokenHead: Bearer
+
+#debug: true
+

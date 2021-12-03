@@ -2,13 +2,15 @@ package com.sise.makerSpace.service;
 
 import com.sise.makerSpace.domain.Resume;
 import com.sise.makerSpace.domain.User;
+import com.sise.makerSpace.utils.ReturnMsgUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public interface UserService {
-     User getUserById(int uid, String password);
+     //User getUserById(int uid, String password);
 
     void register(User user);
 
@@ -25,4 +27,10 @@ public interface UserService {
     boolean alreadyCommitTeacherApply(int user_id);
 
     void initROU(String name);
+
+    User getUserByUserName(String user_name, String password);
+
+    User getUserByUserName(String user_name);
+
+    ReturnMsgUtils login(String user_name, String password, HttpServletRequest request);
 }

@@ -12,8 +12,8 @@
         insert into item(
                         team_id,
                         item_name,
-                         item_describe,
-                         creation_time
+                        item_describe,
+                        creation_time
         ) values(
                  #{team_id},
                  #{item_name},
