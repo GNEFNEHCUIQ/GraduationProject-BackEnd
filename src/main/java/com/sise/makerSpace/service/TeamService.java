@@ -17,4 +17,5 @@ public interface TeamService {
 
     Team getTeamInfoFromReviewId(int review_id);
 
+    void applyToCreateItem(int applicant_team_id, String item_name, String item_describe);
 }

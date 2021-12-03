@@ -21,4 +21,6 @@ public interface ReviewDao {
     void reviewCATApplication(int review_id,int handler_id, int approved);
 
     void reviewCTApplication(int review_id, int handler_id, int approved);
+
+    void reviewCIA(int review_id, int handler_id, int h_approved);
 }

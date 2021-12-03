@@ -22,4 +22,5 @@ public interface ReviewService {
 
     void reviewTeacherCTA(int review_id, int teacher_id, int t_approved);
 
+    void reviewCIA(int review_id, int handler_id, int h_approved);
 }

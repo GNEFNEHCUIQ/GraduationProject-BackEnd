@@ -61,4 +61,28 @@
         from review_create_team where review_id=#{review_id}
     </select>
 
+    <select id="applyToCreateItem">
+        insert into Review_Create_Item(
+            applicant_team_id,
+            item_name,
+            item_describe,
+            teacher_id,
+            t_approved,
+            handler_id,
+            h_approved,
+            creation_time,
+            handling_time
+        )values (
+                 #{applicant_team_id},
+                 #{item_name},
+                 #{item_describe},
+                (select teacher_id from team where team_id=#{applicant_team_id}),
+                 0,
+                 0,
+                 0,
+                 now(),
+                 now()
+                        )
+    </select>
+
 </mapper>

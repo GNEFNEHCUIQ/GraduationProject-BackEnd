@@ -24,13 +24,15 @@
     </select>
 
     <update id="reviewCATApplication">
-        update review_certified_As_Teacher set handler_id=#{handler_id} ,h_approved=#{approved},handling_time=now() where review_id=#{review_id}
+        update review_certified_As_Teacher set handler_id=#{handler_id} ,h_approved=#{h_approved},handling_time=now() where review_id=#{review_id}
     </update>
 
     <update id="reviewCTApplication">
-        update review_create_team set handler_id=#{handler_id} ,h_approved=#{approved},handling_time=now() where review_id=#{review_id}
+        update review_create_team set handler_id=#{handler_id} ,h_approved=#{h_approved},handling_time=now() where review_id=#{review_id}
     </update>
 
-
+    <update id="reviewCIA">
+        update review_create_item set handler_id=#{handler_id} ,h_approved=#{h_approved},handling_time=now() where review_id=#{review_id}
+    </update>
 
 </mapper>

@@ -40,5 +40,10 @@ public class TeamServiceImpl implements TeamService {
         return teamDao.getTeamInfoFromReviewId(review_id);
     }
 
+    @Override
+    public void applyToCreateItem(int applicant_team_id, String item_name, String item_describe) {
+        teamDao.applyToCreateItem(applicant_team_id,item_name,item_describe);
+    }
+
 
 }

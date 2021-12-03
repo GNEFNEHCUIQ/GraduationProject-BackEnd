@@ -1,5 +1,6 @@
 package com.sise.makerSpace.controller;
 
+import com.sise.makerSpace.domain.Item;
 import com.sise.makerSpace.domain.ReviewCertifiedAsTeacher;
 import com.sise.makerSpace.domain.ReviewCreateTeam;
 import com.sise.makerSpace.domain.Team;
@@ -26,6 +27,9 @@ public class OperationalStaffController {
 
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private ItemService itemService;
 
     ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
 
@@ -85,8 +89,8 @@ public class OperationalStaffController {
         return returnMsgUtils.success("还没做！");
     }
 
-    @PutMapping(value = "reviewCTApplication")
-    public ReturnMsgUtils reviewCTApplication(@RequestParam("review_id")int review_id,@RequestParam("handler_id")int handler_id,@RequestParam("approved")int approved) {
+    @PutMapping(value = "reviewCTA")
+    public ReturnMsgUtils reviewCTA(@RequestParam("review_id")int review_id,@RequestParam("handler_id")int handler_id,@RequestParam("h_approved")int approved) {
         reviewService.reviewCTApplication(review_id,handler_id,approved);
         if (approved == -1) {
             //发消息说没通过？
@@ -100,6 +104,36 @@ public class OperationalStaffController {
                     newTeam.getLeader_id(),
                     newTeam.getTeam_describe());
             return returnMsgUtils.success("审批成功！已自动创建团队："+newTeam.getTeam_name());
+        }
+    }
+
+    @GetMapping("/getUnreviewedCIA")
+    public ReturnMsgUtils getUnreviewedCIA(){
+        return returnMsgUtils.success("还没做呢！哈哈！");
+    }
+
+    @GetMapping("/getAllCIA")
+    public ReturnMsgUtils getAllCIA(){
+        return returnMsgUtils.success("还没做呢！哈哈！");
+    }
+
+    @PutMapping("/reviewCIA")
+    public ReturnMsgUtils reviewCIA(@RequestParam("review_id")int review_id,
+                                    @RequestParam("handler_id")int handler_id,
+                                    @RequestParam("h_approved")int h_approved){
+        reviewService.reviewCIA(review_id,handler_id,h_approved);
+        if (h_approved==-1){
+            //发消息说没通过？
+            return returnMsgUtils.success("审核成功！该用户未通过审核！");
+        }else {
+            Item newItem=itemService.getItemInfoFromReviewId(review_id);
+            itemService.CreateItem(
+                    newItem.getTeam_id(),
+                    newItem.getItem_name(),
+                    newItem.getItem_describe()
+            );
+            //System.out.println(newItem.getItem_describe());
+            return returnMsgUtils.success("审批成功！该团队已创建项目："+newItem.getItem_name());
         }
     }
 

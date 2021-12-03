@@ -21,4 +21,5 @@ public interface TeamDao {
 
     Team getTeamInfoFromReviewId(int review_id);
 
+    void applyToCreateItem(int applicant_team_id, String item_name, String item_describe);
 }

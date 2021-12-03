@@ -46,4 +46,9 @@ public class ReviewServiceImpl implements ReviewService {
     public void reviewTeacherCTA(int review_id, int teacher_id, int t_approved) {
         reviewDao.reviewTeacherCTA(review_id,teacher_id,t_approved);
     }
+
+    @Override
+    public void reviewCIA(int review_id, int handler_id, int h_approved) {
+        reviewDao.reviewCIA(review_id,handler_id,h_approved);
+    }
 }
