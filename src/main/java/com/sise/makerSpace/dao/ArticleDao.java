@@ -11,10 +11,6 @@ import java.util.List;
 public interface ArticleDao {
     List<Article> findAllArticle();
 
-    List<Article> findLatestArticle();
-
-    List<Article> findLatestArticle(String sort,int pageIndex,int pageSize);
-
     List<Article> findArticle(String sort);
 
     void addArticle(String title, String sort, String content,int author);

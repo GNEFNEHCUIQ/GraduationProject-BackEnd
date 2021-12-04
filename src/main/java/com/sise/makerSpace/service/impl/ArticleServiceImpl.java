@@ -19,20 +19,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleDao articleDao;
 
-    @Override
-    public List<Article> findAllArticle() {
-        return articleDao.findAllArticle();
-    }
-
-    @Override
-    public List<Article> findLatestArticle() {
-        return articleDao.findLatestArticle();
-    }
-
-    @Override
-    public List<Article> findLatestArticle(String sort, int pageIndex, int pageSize) {
-        return articleDao.findLatestArticle(sort,pageIndex,pageSize);
-    }
 
     @Override
     public PageResult findAllArticleWithPage(PageRequest pageRequest){

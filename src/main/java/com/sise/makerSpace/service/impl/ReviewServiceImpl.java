@@ -3,6 +3,7 @@ package com.sise.makerSpace.service.impl;
 import com.sise.makerSpace.dao.ReviewDao;
 import com.sise.makerSpace.domain.ReviewCertifiedAsTeacher;
 import com.sise.makerSpace.domain.ReviewCreateTeam;
+import com.sise.makerSpace.domain.TeamMember;
 import com.sise.makerSpace.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,5 +51,15 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void reviewCIA(int review_id, int handler_id, int h_approved) {
         reviewDao.reviewCIA(review_id,handler_id,h_approved);
+    }
+
+    @Override
+    public void reviewJoinTeamAppl(int review_id,  int approved) {
+        reviewDao.reviewJoinTeamAppl(review_id,approved);
+    }
+
+    @Override
+    public TeamMember getTidAndUidFromReview(int review_id) {
+        return reviewDao.getTidAndUidFromReview(review_id);
     }
 }

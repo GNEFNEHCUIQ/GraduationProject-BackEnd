@@ -9,6 +9,5 @@ public class TeamMember {
         private int member_id;
         private int user_id;
         private int team_id;
-        private String role;
 
 }

@@ -5,9 +5,7 @@ import com.sise.makerSpace.domain.User;
 import com.sise.makerSpace.utils.ReturnMsgUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public interface UserService {
      //User getUserById(int uid, String password);
@@ -33,4 +31,6 @@ public interface UserService {
     User getUserByUserName(String user_name);
 
     ReturnMsgUtils login(String user_name, String password, HttpServletRequest request);
+
+    void applyJoinTeam(String user_name,int team_id);
 }

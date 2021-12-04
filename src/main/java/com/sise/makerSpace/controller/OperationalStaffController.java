@@ -107,12 +107,12 @@ public class OperationalStaffController {
         }
     }
 
-    @GetMapping("/getUnreviewedCIA")
+    @GetMapping("/findUnreviewedCIA")
     public ReturnMsgUtils getUnreviewedCIA(){
         return returnMsgUtils.success("还没做呢！哈哈！");
     }
 
-    @GetMapping("/getAllCIA")
+    @GetMapping("/findAllCIA")
     public ReturnMsgUtils getAllCIA(){
         return returnMsgUtils.success("还没做呢！哈哈！");
     }

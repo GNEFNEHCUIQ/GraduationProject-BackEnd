@@ -12,7 +12,24 @@
     </resultMap>
 
     <select id="findAllTeamMember" resultMap="teamMemberResultMap">
-        select * from teammember
+        select * from teammember where team_id=#{team_id}
+    </select>
+
+    <select id="findAllTeam" resultType="Team">
+        select * from team order by team_id desc
+    </select>
+
+    <select id="findTeamByTeamName" resultType="Team">
+        select * from team where team_name like concat('%',#{team_name},'%') order by team_id desc
+    </select>
+
+    <select id="findTeamByCategory" resultType="Team">
+        select * from team where category=#{category} order by team_id desc
+    </select>
+
+
+    <select id="getTeamInfo" parameterType="int" resultType="Team">
+        select * from team where team_id=#{user_id}
     </select>
 
     <insert id="applyToCreateATeam" parameterType="Team">
@@ -45,9 +62,6 @@
         )
     </insert>
 
-    <select id="getTeamInfo" parameterType="int" resultType="Team">
-        select * from team where team_id=#{user_id}
-    </select>
 
     <insert id="addTeam">
         insert into team (team_name,category,teacher_id,leader_id,team_describe)
@@ -84,5 +98,30 @@
                  now()
                         )
     </select>
+
+    <select id="findItemByTeamId" resultType="Item">
+        select * from item where team_id=#{team_id}
+    </select>
+
+    <insert id="inviteSBJointeam">
+            insert into review_invite_join_team(applicant_team_id,user_id)
+            values (#{team_id},#{user_id})
+    </insert>
+
+    <insert id="letJoinTeam">
+        insert into teammate(team_id,user_id) values (#{team_id},#{user_id})
+    </insert>
+
+    <update id="changeLeader">
+        update team set leader_id=#{user_id} where team_id=#{team_id}
+    </update>
+
+    <insert id="addManager">
+        insert into team_manager (team_id,user_id) values (#{team_id},#{user_id})
+    </insert>
+
+    <delete id="delManager">
+        delete from team_manager where tm_id=#{tm_id}
+    </delete>
 
 </mapper>

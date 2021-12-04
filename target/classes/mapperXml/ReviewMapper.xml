@@ -3,6 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sise.makerSpace.dao.ReviewDao">
+    
+    <resultMap id="TidAndUidMap" type="TeamMember">
+        <result property="user_id" column="user_id" />
+        <result property="team_id" column="team_id" />
+    </resultMap>
+    
+    
     <!--老师使用的-->
     <select id="findATeachersUnreviewedCTA" resultType="ReviewCreateTeam">
         select * from Review_create_team where teacher_id=#{teacher_id} and t_approved=0
@@ -34,5 +41,13 @@
     <update id="reviewCIA">
         update review_create_item set handler_id=#{handler_id} ,h_approved=#{h_approved},handling_time=now() where review_id=#{review_id}
     </update>
+
+    <update id="reviewJoinTeamAppl">
+        update review_invite_join_team set user_id=#{user_id} ,approved=#{approved},handling_time=now() where review_id=#{review_id}
+    </update>
+
+    <select id="getTidAndUidFromReview" resultMap="TidAndUidMap">
+        select applicant_team_id as team_id,user_id from review_invite_join_team where review_id=#{review_id}
+    </select>
 
 </mapper>

@@ -3,6 +3,7 @@ package com.sise.makerSpace.controller;
 import com.sise.makerSpace.domain.Resume;
 import com.sise.makerSpace.domain.Team;
 import com.sise.makerSpace.domain.User;
+import com.sise.makerSpace.service.ReviewService;
 import com.sise.makerSpace.service.UserService;
 import com.sise.makerSpace.utils.ReturnMsgUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
 
@@ -57,6 +61,12 @@ public class UserController {
             userService.certifiedAsTeacher(user_id);
             return returnMsgUtils.success("申请提交成功");
         }
+    }
+
+    @PostMapping("/applyJoinTeam")
+    public ReturnMsgUtils applyJoinTeam(Principal principal,@RequestParam("team_id")int team_id){
+        userService.applyJoinTeam(principal.getName(),team_id);
+        return returnMsgUtils.success("申请成功！正等待团队管理员审核。");
     }
 
 }

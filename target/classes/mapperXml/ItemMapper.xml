@@ -22,4 +22,12 @@
                         )
     </insert>
 
+    <select id="findTeamAllItem" resultType="Item">
+        select * from item where team_id=#{team_id}
+    </select>
+
+    <select id="findProgressById" resultType="ItemProgress">
+        select * from item_progress where item_id=#{item_id}
+    </select>
+
 </mapper>

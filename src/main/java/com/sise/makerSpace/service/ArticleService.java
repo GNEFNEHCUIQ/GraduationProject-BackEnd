@@ -7,11 +7,6 @@ import com.sise.makerSpace.domain.PageResult;
 import java.util.List;
 
 public interface ArticleService {
-    List<Article> findAllArticle();
-
-    List<Article> findLatestArticle();
-
-    List<Article> findLatestArticle(String sort, int pageIndex, int pageSize);
 
     PageResult findAllArticleWithPage(PageRequest pageRequest);
 

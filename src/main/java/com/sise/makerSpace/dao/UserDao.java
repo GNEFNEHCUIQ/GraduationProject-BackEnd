@@ -32,4 +32,6 @@ public interface UserDao {
     void initROU(String name);
 
     User getUserByUserName(String user_name);
+
+    void applyJoinTeam(String user_name, int team_id);
 }

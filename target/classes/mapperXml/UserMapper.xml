@@ -65,4 +65,8 @@
         insert into role_of_user(user_id,role_id) values ((select user_id from user where name=#{name}),1)
     </insert>
 
+    <insert id="applyJoinTeam">
+        insert into Review_Join_Team(applicant_id,team_id) values ((select user_id from user where user_name=#{user_name}),#{team_id})
+    </insert>
+
 </mapper>

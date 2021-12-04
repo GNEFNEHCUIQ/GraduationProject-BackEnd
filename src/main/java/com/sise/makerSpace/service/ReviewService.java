@@ -2,6 +2,7 @@ package com.sise.makerSpace.service;
 
 import com.sise.makerSpace.domain.ReviewCertifiedAsTeacher;
 import com.sise.makerSpace.domain.ReviewCreateTeam;
+import com.sise.makerSpace.domain.TeamMember;
 
 import java.util.List;
 
@@ -23,4 +24,8 @@ public interface ReviewService {
     void reviewTeacherCTA(int review_id, int teacher_id, int t_approved);
 
     void reviewCIA(int review_id, int handler_id, int h_approved);
+
+    void reviewJoinTeamAppl(int review_id,  int approved);
+
+    TeamMember getTidAndUidFromReview(int review_id);
 }
