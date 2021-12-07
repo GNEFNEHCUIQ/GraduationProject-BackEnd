@@ -1,8 +1,10 @@
 package com.sise.makerSpace.controller;
 
+import com.sise.makerSpace.domain.CompetitionTeam;
 import com.sise.makerSpace.domain.Item;
 import com.sise.makerSpace.domain.Team;
 import com.sise.makerSpace.domain.TeamMember;
+import com.sise.makerSpace.service.CompetitionService;
 import com.sise.makerSpace.service.ReviewService;
 import com.sise.makerSpace.service.TeamService;
 import com.sise.makerSpace.utils.ReturnMsgUtils;
@@ -19,6 +21,9 @@ public class TeamManagerController {
     private TeamService teamService;
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private CompetitionService competitionService;
 
     ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
 
@@ -49,16 +54,21 @@ public class TeamManagerController {
             teamService.letJoinTeam(teamMember.getTeam_id(),teamMember.getMember_id());
             return returnMsgUtils.success("已接受该用户已加入团队！");
         }
-
     }
 
     private TeamMember getTidAndUidFromReview(int review_id){
         return reviewService.getTidAndUidFromReview(review_id);
     }
 
-    @GetMapping
+    @GetMapping("/modTeamInfo")
     public ReturnMsgUtils modTeamInfo(@RequestBody Team team){
         return returnMsgUtils.success("还没做呢！");
+    }
+
+    @PostMapping("/enterCompetition")
+    public ReturnMsgUtils enterCompetition(@RequestBody CompetitionTeam competitionTeam){
+        competitionService.enterCompetition(competitionTeam);
+        return returnMsgUtils.success("报名成功！");
     }
 
 }

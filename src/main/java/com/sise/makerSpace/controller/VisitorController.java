@@ -23,29 +23,19 @@ public class VisitorController {
 
     ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
 
-
-    @PostMapping(value = "/doLogin")
-    public User doLogin(@RequestParam("user_name") String user_name,
-                        @RequestParam("password") String password){
-        User user=userService.getUserByUserName(user_name,password);
-        System.out.println("user_name:"+user.getUsername()+",password:"+user.getPassword()+",name:"+user.getUsername());
-        return user;
-    }
-
     @PostMapping("/login")
     public ReturnMsgUtils login(@RequestBody User user, HttpServletRequest request){
-        return userService.login(user.getUser_name(),user.getPassword(),request);
+        return returnMsgUtils.setData(userService.login(user.getUser_name(),
+                user.getPassword(),
+                request)
+        );
     }
 
     @PostMapping(value = "/register")
     public ReturnMsgUtils register(@RequestBody User user){
-        //ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
         if (userService.checkDuplicateName(user.getUsername())) {   //if user exist
-            //System.out.println("fail");
             return returnMsgUtils.fail("the username already exist");
-        } /*else if(user.getName()) {
-
-        }*/else {
+        } else {
             userService.register(user);
             //createResumeByName(user.getName());
             userService.createResumeByName(user.getUsername());

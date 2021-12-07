@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sise.makerSpace.dao.CompetitionDao">
+
+    <select id="getCompetitionInfo" resultType="CompetitionInfo">
+        select * from competition_info order by competition_id desc
+    </select>
+
+    <select id="getAllCompeteRecord" resultType="CompetitionRecord">
+        select * from Competition_record order by Crecord_id desc
+    </select>
+
+    <select id="getCompetitionResult">
+        select * from Competition_result where Cresult_id=#{Cresult_id}
+    </select>
+
+    <insert id="competitionTeam" parameterType="CompetitionTeam">
+        insert into Competition_team(Crecord_id,team_id,entry,CTdescribe)
+        values (#{competitionTeam.Crecord_id},#{competitionTeam.team_id},#{competitionTeam.entry},#{competitionTeam.CTdescribe})
+    </insert>
+
+
+</mapper>

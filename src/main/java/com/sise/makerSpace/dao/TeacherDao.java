@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
-public class TeacherDao {
+public interface TeacherDao {
 }

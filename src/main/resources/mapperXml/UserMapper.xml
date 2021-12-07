@@ -26,6 +26,25 @@
             <result property="name" column="name"/>
         </association>
     </resultMap>
+    
+    <resultMap id="Menus" type="Menu">
+        <id column="id" property="menu_id" />
+        <result column="url" property="url" />
+        <result column="path" property="path" />
+        <result column="component" property="component" />
+        <result column="menu_name" property="menu_name" />
+        <result column="icon" property="icon" />
+        <result column="parent_id" property="parent_id" />
+        <collection property="children" ofType="Menu">
+            <id column="id2" property="menu_id" />
+            <result column="url2" property="url" />
+            <result column="path2" property="path" />
+            <result column="component2" property="component" />
+            <result column="name2" property="menu_name" />
+            <result column="icon" property="icon" />
+            <result column="parent_id" property="parent_id" />
+        </collection>
+    </resultMap>
 
     <select id="getUserByUserName" resultMap="userResultMap">
         select * from user where user_name=#{user_name}
@@ -68,5 +87,37 @@
     <insert id="applyJoinTeam">
         insert into Review_Join_Team(applicant_id,team_id) values ((select user_id from user where user_name=#{user_name}),#{team_id})
     </insert>
+
+    <select id="getMenuByUserId" resultMap="Menus">
+        SELECT
+            DISTINCT
+            m1.menu_id as id,
+            m1.url as url,
+            m1.path as path,
+            m1.component as component,
+            m1.menu_name as name,
+            m1.icon as icon,
+            m1.parent_Id as parent_Id,
+            m2.menu_id as id2,
+            m2.url as url2,
+            m2.path as path2,
+            m2.component as component2,
+            m2.menu_name as name2,
+            m2.icon as icon2,
+            m2.parent_Id as parent_Id2
+        FROM
+            menu m1,
+            menu m2,
+            user_role ur,
+            menu_role mr
+        WHERE
+            m1.menu_id=m2.parent_Id
+          AND
+            m2.menu_id=mr.menu_id
+          AND
+            mr.role_id = ur.role_id
+          AND
+            ur.user_id = #{user_id}
+    </select>
 
 </mapper>

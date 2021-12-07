@@ -6,11 +6,11 @@ public class ReturnMsgUtils implements Serializable {
     private Integer flag;
     private String message;
     private Object data;	//数据，可以是PageBean
-    public final static int OK=1;
+    public final static int OK=200;
     public final static int FAIL = 0;
     public final static int USERNAME_ALREADY_EXIST = 2;
-    public final static int NOT_LOGIN=-1;
-    public final static int PERMISSION_DENIED=3;
+    public final static int NOT_LOGIN=401;
+    public final static int PERMISSION_DENIED=403;
 
     public ReturnMsgUtils() {
         this.flag = OK;
@@ -103,4 +103,11 @@ public class ReturnMsgUtils implements Serializable {
         this.data = data;
         return this;
     }
+
+    public ReturnMsgUtils setData(Object data,String message) {
+        this.data = data;
+        this.message=message;
+        return this;
+    }
+
 }

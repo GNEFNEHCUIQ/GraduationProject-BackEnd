@@ -5,14 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-@Repository
 @Data
+@Repository
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
-    private int role_id;
-    private String role_name;
-    private String role_nameCN;
-
-
+public class CompetitionInfo {
+    private int competition_id;
+    private String competition_name;
+    private String level;
+    private String describe;
 }

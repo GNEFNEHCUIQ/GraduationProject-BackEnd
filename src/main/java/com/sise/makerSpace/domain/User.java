@@ -11,15 +11,15 @@ import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 @Data
-/*@Accessors(chain = true)
-@EqualsAndHashCode(callSuper = false)*/
 @Repository
 public class User implements /*Serializable,*/ UserDetails {
         private int user_id;
         private String password;
         private String user_name;
+        private List<Role> roles;
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -51,4 +51,5 @@ public class User implements /*Serializable,*/ UserDetails {
         public boolean isEnabled() {
                 return true;
         }
+
 }

@@ -1,5 +1,6 @@
 package com.sise.makerSpace.dao;
 
+import com.sise.makerSpace.domain.Menu;
 import com.sise.makerSpace.domain.Resume;
 import com.sise.makerSpace.domain.User;
 import org.apache.ibatis.annotations.Mapper;
@@ -34,4 +35,6 @@ public interface UserDao {
     User getUserByUserName(String user_name);
 
     void applyJoinTeam(String user_name, int team_id);
+
+    List<Menu> getMenuByUserId(int user_id);
 }

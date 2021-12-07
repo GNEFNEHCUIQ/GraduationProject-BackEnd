@@ -17,8 +17,6 @@ spring:
       connection-timeout: 30000
       connection-test-query: SELECT 1
 
-
-
   jpa:
     showSql: true
 
@@ -38,6 +36,8 @@ spring:
       exclude: WEB-INF/**
     freemarker:
       cache: false    #页面不加载缓存，修改即时生效
+  mvc:
+    log-request-details: true
 
 mybatis:
   type-aliases-package: com.sise.makerSpace.domain
@@ -65,6 +65,8 @@ jwt:
   secret: ms-secret
   expiration: 604800
   tokenHead: Bearer
+
+
 
 #debug: true
 

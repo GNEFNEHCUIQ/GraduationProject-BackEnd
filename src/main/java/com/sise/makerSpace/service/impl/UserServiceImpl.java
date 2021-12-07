@@ -1,6 +1,7 @@
 package com.sise.makerSpace.service.impl;
 
 import com.sise.makerSpace.config.JwtTokenConfig;
+import com.sise.makerSpace.domain.Menu;
 import com.sise.makerSpace.domain.Resume;
 import com.sise.makerSpace.domain.User;
 import com.sise.makerSpace.dao.UserDao;
@@ -76,6 +77,8 @@ public class UserServiceImpl implements UserService {
     public void applyJoinTeam(String user_name, int team_id) {
         userDao.applyJoinTeam(user_name,team_id);
     }
+
+
 
     @Override
     public void register(User user) {

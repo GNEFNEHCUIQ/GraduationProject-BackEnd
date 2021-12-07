@@ -12,19 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@ResponseBody
+@RestController
 @RequestMapping(value = "/article")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ArticleController {
 
-    //private static int _pageIndex=0;
-    //private static int _pageSize=5;
-
     @Autowired
     private ArticleService articleService;
-
-
 
     @PostMapping(value = "/findAllArticleWithPage") //result：pageNum,pageSize,totalPages,totalSize
     public PageResult findAllArticleWithPage(@RequestParam("pageNum") int pageNum,@RequestParam("pageSize") int pageSize){
@@ -40,10 +34,5 @@ public class ArticleController {
         System.out.println("pageRequest"+pageRequest);
         return articleService.findArticle(sort,pageRequest);
     }
-
-
-
-
-
 
 }
