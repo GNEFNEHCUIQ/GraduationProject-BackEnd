@@ -6,12 +6,14 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Repository
@@ -23,7 +25,11 @@ public class User implements /*Serializable,*/ UserDetails {
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-                return null;
+                List<SimpleGrantedAuthority> authorities=roles
+                        .stream()
+                        .map(role -> new SimpleGrantedAuthority(role.getRole_name()))
+                        .collect(Collectors.toList());
+                return authorities;
         }
 
         @Override

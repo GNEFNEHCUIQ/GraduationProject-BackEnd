@@ -45,7 +45,7 @@ mybatis:
   # 打印sql
   logging:
     level:
-      com.sise.makerSpace.dao: debug
+      com.sise.makerSpace.dao: info
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     mapUnderscoreToCamelCase: false
@@ -57,7 +57,7 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
-debug: true
+#debug: true
 
 
 jwt:

@@ -3,6 +3,7 @@ package com.sise.makerSpace.service.impl;
 import com.sise.makerSpace.config.JwtTokenConfig;
 import com.sise.makerSpace.domain.Menu;
 import com.sise.makerSpace.domain.Resume;
+import com.sise.makerSpace.domain.Role;
 import com.sise.makerSpace.domain.User;
 import com.sise.makerSpace.dao.UserDao;
 import com.sise.makerSpace.service.UserService;
@@ -56,9 +57,9 @@ public class UserServiceImpl implements UserService {
         UserDetails userDetails=userDetailsService.loadUserByUsername(user_name);
         String encode = passwordEncoder.encode(userDetails.getPassword());
         if (null==userDetails || !passwordEncoder.matches(password,encode)){
-            System.out.println("userDetails:"+userDetails);
+            /*System.out.println("userDetails:"+userDetails);
             System.out.println("password:"+password);
-            System.out.println("pencode:"+encode);
+            System.out.println("pencode:"+encode);*/
             System.out.println("passwordEncoder.matches:"+passwordEncoder.matches(password,userDetails.getPassword()));
             return returnMsgUtils.fail("用户名或密码不正确");
         }
@@ -77,6 +78,7 @@ public class UserServiceImpl implements UserService {
     public void applyJoinTeam(String user_name, int team_id) {
         userDao.applyJoinTeam(user_name,team_id);
     }
+
 
 
 
@@ -127,6 +129,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void initROU(String name) {
         userDao.initROU(name);
+    }
+
+    @Override
+    public List<Role> getRoles(Integer user_id) {
+        return userDao.getRoles(user_id);
     }
 
 }

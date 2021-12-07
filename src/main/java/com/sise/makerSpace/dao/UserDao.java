@@ -2,6 +2,7 @@ package com.sise.makerSpace.dao;
 
 import com.sise.makerSpace.domain.Menu;
 import com.sise.makerSpace.domain.Resume;
+import com.sise.makerSpace.domain.Role;
 import com.sise.makerSpace.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -37,4 +38,6 @@ public interface UserDao {
     void applyJoinTeam(String user_name, int team_id);
 
     List<Menu> getMenuByUserId(int user_id);
+
+    List<Role> getRoles(Integer user_id);
 }

@@ -2,6 +2,7 @@ package com.sise.makerSpace.service;
 
 import com.sise.makerSpace.domain.Menu;
 import com.sise.makerSpace.domain.Resume;
+import com.sise.makerSpace.domain.Role;
 import com.sise.makerSpace.domain.User;
 import com.sise.makerSpace.utils.ReturnMsgUtils;
 
@@ -35,5 +36,6 @@ public interface UserService {
 
     void applyJoinTeam(String user_name,int team_id);
 
+    List<Role> getRoles(Integer user_id);
 
 }

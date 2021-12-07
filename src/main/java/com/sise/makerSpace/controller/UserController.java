@@ -45,6 +45,7 @@ public class UserController {
         String user_name=principal.getName();
         User user=userService.getUserByUserName(user_name);
         user.setPassword(null);
+        user.setRoles(userService.getRoles(user.getUser_id()));
         return user;
     }
 

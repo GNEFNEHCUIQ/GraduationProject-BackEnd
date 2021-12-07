@@ -2,7 +2,9 @@ package com.sise.makerSpace.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,18 +13,19 @@ import java.util.List;
 @Repository
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
 public class Menu {
-    private int menu_id;
+    private Integer menu_id;
     private String url;
     private String path;
     private String component;
     private String menu_name;
     private String icon;
-    private String parent_id;
+    private Integer parent_id;
 
-    //@TableField(exist = false)
+    private List<Menu> children;
+
     private List<Role> roles;
-
-
 
 }
