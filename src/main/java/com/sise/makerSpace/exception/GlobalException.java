@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.SQLSyntaxErrorException;
 
 /**
  * @program: yeb
@@ -22,6 +23,8 @@ public class GlobalException {
     public ReturnMsgUtils mySqlException(SQLException e){
         if (e instanceof SQLIntegrityConstraintViolationException){
             return returnMsgUtils.fail("该数据有关联数据，操作失败！");
+        }else if (e instanceof SQLSyntaxErrorException){
+            return returnMsgUtils.fail("值与数据库的列无法对应，操作失败！");
         }
         //除了上面捕获的知道sql异常，其他sql异常都报这个错误
         return returnMsgUtils.fail("数据异常，操作失败!");

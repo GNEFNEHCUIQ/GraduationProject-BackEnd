@@ -70,4 +70,9 @@ public class UserController {
         return returnMsgUtils.success("申请成功！正等待团队管理员审核。");
     }
 
+    @PostMapping("/logout")
+    public ReturnMsgUtils logout(){
+        return returnMsgUtils.success("注销成功");
+    }
+
 }

@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 @Repository
 public class User implements /*Serializable,*/ UserDetails {
         private int user_id;
-        private String password;
         private String user_name;
+        private String password;
         private List<Role> roles;
 
         @Override

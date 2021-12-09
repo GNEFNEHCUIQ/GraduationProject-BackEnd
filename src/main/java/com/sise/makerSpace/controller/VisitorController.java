@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@Controller
-@ResponseBody
+@RestController
 @RequestMapping(value = "/")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class VisitorController {
@@ -34,7 +33,7 @@ public class VisitorController {
     @PostMapping(value = "/register")
     public ReturnMsgUtils register(@RequestBody User user){
         if (userService.checkDuplicateName(user.getUsername())) {   //if user exist
-            return returnMsgUtils.fail("the username already exist");
+            return returnMsgUtils.fail("用户名已存在");
         } else {
             userService.register(user);
             //createResumeByName(user.getName());

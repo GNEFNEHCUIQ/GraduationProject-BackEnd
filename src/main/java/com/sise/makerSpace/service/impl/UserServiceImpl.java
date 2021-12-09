@@ -71,6 +71,7 @@ public class UserServiceImpl implements UserService {
         Map<String,String> tokenMap=new HashMap<>();
         tokenMap.put("token",token);
         tokenMap.put("tokenHead",tokenHead);
+        System.out.println("tokenMap:"+tokenMap);
         return returnMsgUtils.setData(tokenMap);
     }
 

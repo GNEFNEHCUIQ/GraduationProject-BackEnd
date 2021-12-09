@@ -20,7 +20,7 @@ public class Menu {
     private String url;
     private String path;
     private String component;
-    private String menu_name;
+    private String name;
     private String icon;
     private Integer parent_id;
 

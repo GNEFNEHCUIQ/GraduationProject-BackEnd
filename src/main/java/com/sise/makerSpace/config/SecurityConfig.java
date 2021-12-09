@@ -51,7 +51,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(
                 //放行的资源路径
                 "/login",
+                "/register",
                 "/logout",
+                "/menu/getMenu",
                 "/css/**",
                 "/js/**",
                 "/index.html",
@@ -74,6 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 //所有请求都需要认证
+                .antMatchers("/","/login").permitAll()
                 .anyRequest()
                 .authenticated()
                 //动态权限配置

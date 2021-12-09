@@ -7,7 +7,7 @@
     <resultMap type="User" id="userResultMap">
         <id property="user_id" column="user_id"/>
         <result property="password" column="password"/>
-        <result property="name" column="name"/>
+        <result property="user_name" column="user_name"/>
     </resultMap>
 
     <resultMap type="Resume" id="UserInfoMap" >
@@ -23,7 +23,7 @@
         <association property="user" javaType="user">
             <id property="user_id" column="user_id"/>
             <result property="password" column="password"/>
-            <result property="name" column="name"/>
+            <result property="user_name" column="user_name"/>
         </association>
     </resultMap>
     
@@ -57,19 +57,19 @@
     </select>
 
     <insert id="register" parameterType="User">
-        insert into user(user_id,name,password) values (null,#{name},#{password})
+        insert into user(user_name,password) values (#{user_name},#{password})
     </insert>
 
     <select id="checkDuplicateName" resultType="User">
-        select user_id from user where name=#{name}
+        select user_id from user where user_name=#{user_name}
     </select>
 
     <insert id="createResumeByName">
-        insert into resume (resume_id,user_id) values (null,(select user_id from user where name=#{name}))
+        insert into resume (resume_id,user_id) values (null,(select user_id from user where user_name=#{user_name}))
     </insert>
 
     <select id="isTeacher" parameterType="int" resultType="java.lang.Integer">
-        select count(*) from role_of_user where user_id=#{user_id} and role_id=3
+        select count(*) from user_role where user_id=#{user_id} and role_id=3
     </select>
 
     <select id="alreadyCommitTeacherApply" resultType="int">
@@ -81,7 +81,7 @@
     </insert>
 
     <insert id="initROU">
-        insert into role_of_user(user_id,role_id) values ((select user_id from user where name=#{name}),1)
+        insert into user_role(user_id,role_id) values ((select user_id from user where user_name=#{user_name}),1)
     </insert>
 
     <insert id="applyJoinTeam">

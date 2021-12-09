@@ -7,19 +7,19 @@ public class ReturnMsgUtils implements Serializable {
     private String message;
     private Object data;	//数据，可以是PageBean
     public final static int OK=200;
-    public final static int FAIL = 0;
+    public final static int FAIL = 404;
     public final static int USERNAME_ALREADY_EXIST = 2;
     public final static int NOT_LOGIN=401;
     public final static int PERMISSION_DENIED=403;
 
     public ReturnMsgUtils() {
         this.flag = OK;
-        this.message = "OK";
+        this.message = "成功！";
     }
 
     public ReturnMsgUtils(Object data){
         this.flag = OK;
-        this.message = "OK";
+        this.message = "成功！";
         this.data = data;
     }
 
