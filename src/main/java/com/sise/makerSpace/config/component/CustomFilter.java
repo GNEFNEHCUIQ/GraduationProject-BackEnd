@@ -11,6 +11,7 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,15 +27,20 @@ public class CustomFilter implements FilterInvocationSecurityMetadataSource {
     @Override
     public Collection<ConfigAttribute> getAttributes(Object o) throws IllegalArgumentException {
         String requestUrl = ((FilterInvocation) o).getRequestUrl();
+        System.out.println("requestUrl:"+requestUrl);
         List<Menu> menus = menuService.getMenuWithRole();
+        System.out.println("menus："+menus);
         for (Menu menu : menus){
+            System.out.println("match(menu.getUrl():"+menu.getUrl());
             if (antPathMatcher.match(menu.getUrl(),requestUrl)){
                 String[] strings=menu.getRoles().stream().map(Role::getRole_name).toArray(String[]::new);
+                System.out.println("strings:"+ Arrays.toString(strings));
                 return SecurityConfig.createList(strings);
             }
         }
-
+        System.out.println("我还是出来了");
         return SecurityConfig.createList("ROLE_user");
+        //return null;
     }
 
     @Override

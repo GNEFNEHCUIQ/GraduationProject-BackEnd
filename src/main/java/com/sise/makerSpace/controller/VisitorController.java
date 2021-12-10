@@ -22,11 +22,18 @@ public class VisitorController {
 
     ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
 
-    @PostMapping("/login")
+    /*@PostMapping("/login")
     public ReturnMsgUtils login(@RequestBody User user, HttpServletRequest request){
         return returnMsgUtils.setData(userService.login(user.getUser_name(),
                 user.getPassword(),
                 request)
+        );
+    }*/
+    @PostMapping("/login")
+    public Object login(@RequestBody User user, HttpServletRequest request){
+        return userService.login(user.getUser_name(),
+                user.getPassword(),
+                request
         );
     }
 

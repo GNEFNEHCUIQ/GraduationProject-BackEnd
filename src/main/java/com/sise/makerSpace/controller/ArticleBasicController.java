@@ -13,21 +13,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/article")
+@RequestMapping(value = "/article/basic")
 @CrossOrigin(origins = "*", maxAge = 3600)
-public class ArticleController {
+public class ArticleBasicController {
 
     @Autowired
     private ArticleService articleService;
 
-    @PostMapping(value = "/findAllArticleWithPage") //result：pageNum,pageSize,totalPages,totalSize
+    ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
+
+    /*@GetMapping(value = "/findAllArticleWithPage") //result：pageNum,pageSize,totalPages,totalSize
     public PageResult findAllArticleWithPage(@RequestParam("pageNum") int pageNum,@RequestParam("pageSize") int pageSize){
         PageRequest pageRequest=new PageRequest(pageNum,pageSize);
         System.out.println("pageRequest"+pageRequest);
         return articleService.findAllArticleWithPage(pageRequest);
+    }*/
+
+    @GetMapping(value = "/findAllArticleWithPage") //result：pageNum,pageSize,totalPages,totalSize
+    public ReturnMsgUtils findAllArticleWithPage(){
+        PageRequest pageRequest=new PageRequest(1,10);
+        System.out.println("pageRequest"+pageRequest);
+        return returnMsgUtils.setData(  articleService.findAllArticleWithPage(pageRequest));
     }
 
-    @PostMapping(value = "/findArticleBySort")   //没前端做不了阿
+    @PostMapping(value = "/findArticleBySort")
     public PageResult findArticle(@RequestParam("sort")String sort, @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
         System.out.println("sort:"+sort+",pageNum"+",pageSize:"+pageSize);
         PageRequest pageRequest=new PageRequest(pageNum,pageSize);
