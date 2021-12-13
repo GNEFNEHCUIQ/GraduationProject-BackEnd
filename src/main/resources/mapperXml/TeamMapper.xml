@@ -11,6 +11,14 @@
         <result property="role" column="role"/>
     </resultMap>
 
+    <select id="getYourTeam" resultType="java.lang.Integer">
+        SELECT team_id FROM `teammember` where user_id=#{user_id}
+    </select>
+
+    <select id="getTeamByTeamId" resultType="Team">
+        SELECT * from team where team_id=#{team_Id}
+    </select>
+
     <select id="findAllTeamMember" resultMap="teamMemberResultMap">
         select * from teammember where team_id=#{team_id}
     </select>
@@ -61,6 +69,22 @@
             null
         )
     </insert>
+
+    <select id="getTeamIdByTeamName" resultType="int">
+        select team_id from team where team_name=#{team_name}
+    </select>
+
+    <insert id="addTeammenber">
+        insert into teammember(user_id,team_id) values (#{user_id},#{team_id})
+    </insert>
+
+    <select id="getTeacherIdByRealName" resultType="java.lang.Integer">
+        select u.user_id FROM user u,resume r where u.user_id=r.user_id and r.real_name=#{teacherRealName}
+    </select>
+
+    <select id="checkTeamNameIfExist" resultType="java.lang.Integer">
+        select count(team_id) from team where team_name=#{team_name}
+    </select>
 
 
     <insert id="addTeam">

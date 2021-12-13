@@ -29,4 +29,10 @@ public interface ReviewDao {
     void reviewJoinTeamAppl(int review_id, int approved);
 
     TeamMember getTidAndUidFromReview(int review_id);
+
+    List<ReviewCreateTeam> findUnreviewedCTA();
+
+    void reviewCTA(int review_id, int h_approved,int handler_id);
+
+    ReviewCreateTeam getCTAInfoByRid(int review_id);
 }

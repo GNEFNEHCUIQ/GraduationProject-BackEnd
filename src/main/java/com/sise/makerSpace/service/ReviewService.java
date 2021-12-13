@@ -8,11 +8,16 @@ import java.util.List;
 
 public interface ReviewService {
 
+
+    List<ReviewCreateTeam> findUnreviewedCTA();
+
     List<ReviewCertifiedAsTeacher> findAllCATApplication();
 
     void reviewCATApplication(int review_id,int handler_id, int approved);
 
     void reviewCTApplication(int review_id, int handler_id, int approved);
+
+    void reviewCTA(int review_id, int h_approved,int handler_id);
 
     /*下面是老师的*/
 
@@ -28,4 +33,7 @@ public interface ReviewService {
     void reviewJoinTeamAppl(int review_id,  int approved);
 
     TeamMember getTidAndUidFromReview(int review_id);
+
+
+    ReviewCreateTeam getCTAInfoByRid(int review_id);
 }

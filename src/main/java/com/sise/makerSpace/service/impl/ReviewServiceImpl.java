@@ -17,6 +17,11 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
+    public List<ReviewCreateTeam> findUnreviewedCTA() {
+        return reviewDao.findUnreviewedCTA();
+    }
+
+    @Override
     public List<ReviewCertifiedAsTeacher> findAllCATApplication() {
         return reviewDao.findAllCATApplication();
     }
@@ -61,5 +66,15 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public TeamMember getTidAndUidFromReview(int review_id) {
         return reviewDao.getTidAndUidFromReview(review_id);
+    }
+
+    @Override
+    public void reviewCTA(int review_id, int h_approved,int handler_id) {
+        reviewDao.reviewCTA(review_id,h_approved,handler_id);
+    }
+
+    @Override
+    public ReviewCreateTeam getCTAInfoByRid(int review_id) {
+        return reviewDao.getCTAInfoByRid(review_id);
     }
 }

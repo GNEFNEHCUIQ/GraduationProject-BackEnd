@@ -50,10 +50,8 @@
         select * from user where user_name=#{user_name}
     </select>
 
-    <select id="getUserInfoByUserId" resultMap="UserInfoMap">
-        select
-            r.resume_id,r.age,r.gender,r.real_name,r.phone,r.education,r.school,r.experience,r.self_assessment,u.user_id,u.password,u.name
-        from user u,resume r where  r.user_id=u.user_id and r.user_id=#{user_id}
+    <select id="getUserResume" resultType="Resume">
+        select * from resume where user_id=#{user_id}
     </select>
 
     <insert id="register" parameterType="User">

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sise.makerSpace.dao.ArticleDao">
 
-    <resultMap type="Article" id="articleMemberResultMap">
+    <resultMap type="Article" id="articleResultMap">
         <id property="article_id" column="article_id"/>
         <result property="sort" column="sort"/>
         <result property="title" column="title"/>
@@ -17,7 +17,7 @@
         article_id,sort,title,content,author,creation_time
     </sql>
 
-    <select id="findAllArticle" resultMap="articleMemberResultMap">
+    <select id="findAllArticle" resultMap="articleResultMap">
         select
         <include refid="article" />
         from article
@@ -25,8 +25,7 @@
     </select>
 
 
-
-    <select id="findArticle" resultMap="articleMemberResultMap">
+    <select id="findArticle" resultMap="articleResultMap">
         SELECT
         <include refid="article" />
         from article
@@ -34,6 +33,10 @@
             where sort=#{sort}
         </if>
         ORDER BY article_id DESC
+    </select>
+
+    <select id="findArticleById" resultMap="articleResultMap">
+        select * from article where article_id=#{article_id}
     </select>
 
     <insert id="addArticle">
@@ -49,6 +52,10 @@
 
     <select id="ifArticleExist" resultType="Integer">
         select 1 from article where article_id=#{article_id}
+    </select>
+
+    <select id="searchArticle" resultMap="articleResultMap">
+        select * from article where title like concat('%',#{title},'%')
     </select>
 
 </mapper>

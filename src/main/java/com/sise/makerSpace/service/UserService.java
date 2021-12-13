@@ -16,7 +16,7 @@ public interface UserService {
 
     boolean checkDuplicateName(String name);
 
-    List<Resume> getUserInfoByUserId(int uid);
+    Resume getUserResume(int user_id);
 
     void createResumeByName(String name);
 

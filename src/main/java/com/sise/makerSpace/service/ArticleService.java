@@ -17,4 +17,8 @@ public interface ArticleService {
     void delArticle(int article_id);
 
     boolean ifArticleExist(int article_id);
+
+    PageResult searchArticle(String title,PageRequest pageRequest);
+
+    Article findArticleById(int article_id);
 }

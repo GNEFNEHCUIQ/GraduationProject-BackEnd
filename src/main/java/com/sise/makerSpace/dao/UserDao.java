@@ -21,7 +21,7 @@ public interface UserDao {
 
     User checkDuplicateName(String name);
 
-    List<Resume> getUserInfoByUserId(int user_id);
+    Resume getUserResume(int user_id);
 
     void createResumeByName(String name);
 

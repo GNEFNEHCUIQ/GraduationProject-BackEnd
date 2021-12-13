@@ -9,6 +9,7 @@ import com.sise.makerSpace.utils.ReturnMsgUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -89,6 +90,41 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void delManager(int tm_id) {
         teamDao.delManager(tm_id);
+    }
+
+    @Override
+    public List<Team> getYourTeam(int user_id) {
+        List<Integer> yourTeamsId=teamDao.getYourTeam(user_id);
+        List<Team> yourTeam = new ArrayList<>() ;
+        for (Integer team_Id : yourTeamsId) {
+            yourTeam.add(teamDao.getTeamByTeamId(team_Id));
+        }
+
+        return yourTeam;
+        /*return null;*/
+    }
+
+    @Override
+    public Integer getTeacherIdByRealName(String teacherRealName) {
+        return teamDao.getTeacherIdByRealName(teacherRealName);
+    }
+
+    @Override
+    public boolean checkTeamNameIfExist(String team_name) {
+        if (teamDao.checkTeamNameIfExist(team_name)!=0)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public int getTeamIdByTeamName(String team_name) {
+        return teamDao.getTeamIdByTeamName(team_name);
+    }
+
+    @Override
+    public void addTeammenber(int user_id, int team_id) {
+        teamDao.addTeammenber(user_id,team_id);
     }
 
 

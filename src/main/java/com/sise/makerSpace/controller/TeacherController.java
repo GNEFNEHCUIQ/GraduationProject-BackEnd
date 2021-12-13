@@ -3,35 +3,45 @@ package com.sise.makerSpace.controller;
 import com.sise.makerSpace.service.ReviewService;
 import com.sise.makerSpace.service.TeacherService;
 import com.sise.makerSpace.service.TeamService;
+import com.sise.makerSpace.service.UserService;
 import com.sise.makerSpace.utils.ReturnMsgUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
-@RequestMapping(value = "/teacher")
+@RequestMapping(value = "/teacher/basic")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class TeacherController {
     @Autowired
     private ReviewService reviewService;
 
+    @Autowired
+            private UserService userService;
+
     ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
 
     @GetMapping(value = "/findATeachersUnreviewedCTA")
-    public ReturnMsgUtils findATeachersUnreviewedCTA(@RequestParam("teacher_id")int teacher_id){
+    public ReturnMsgUtils findATeachersUnreviewedCTA(Principal principal){
+        int teacher_id=userService.getUserByUserName(principal.getName()).getUser_id();
         return returnMsgUtils.setData(reviewService.findATeachersUnreviewedCTA(teacher_id));
     }
 
     @GetMapping(value = "/findATeachersAllCTA")
-    public ReturnMsgUtils findATeachersAllCTA(@RequestParam("teacher_id")int teacher_id){
+    public ReturnMsgUtils findATeachersAllCTA(Principal principal){
+        int teacher_id=userService.getUserByUserName(principal.getName()).getUser_id();
         return returnMsgUtils.setData(reviewService.findATeachersAllCTA(teacher_id));
     }
 
 
+
     @PutMapping(value = "/reviewTeacherCTA")
-    public ReturnMsgUtils reviewCTApplication(
+    public ReturnMsgUtils reviewTeacherCTA(
             @RequestParam("review_id")int review_id,
-            @RequestParam("teacher_id")int teacher_id,
+            Principal principal,
             @RequestParam("t_approved")int t_approved){
+        int teacher_id=userService.getUserByUserName(principal.getName()).getUser_id();
         reviewService.reviewTeacherCTA(review_id,teacher_id,t_approved);
         if (t_approved==-1){
             return returnMsgUtils.success("审核成功！已拒绝");

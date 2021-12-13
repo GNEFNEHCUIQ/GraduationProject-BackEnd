@@ -23,6 +23,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public PageResult findAllArticleWithPage(PageRequest pageRequest){
         PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
+        //System.out.println("pageRequest.getPageSize()"+pageRequest.getPageSize());
         List<Article> allArticleWithPage=articleDao.findAllArticle();
         PageInfo<Article> articlePageInfo=new PageInfo<>(allArticleWithPage);
         return PageUtils.getPageResult(pageRequest,articlePageInfo);
@@ -52,6 +53,20 @@ public class ArticleServiceImpl implements ArticleService {
         return true;
         else
             return false;
+    }
+
+    @Override
+    public PageResult searchArticle(String title,PageRequest pageRequest) {
+        PageHelper.startPage(pageRequest.getPageNum(), pageRequest.getPageSize());
+        //System.out.println("pageRequest.getPageSize()"+pageRequest.getPageSize());
+        List<Article> searchArticle=articleDao.searchArticle(title);
+        PageInfo<Article> articlePageInfo=new PageInfo<>(searchArticle);
+        return PageUtils.getPageResult(pageRequest,articlePageInfo);
+    }
+
+    @Override
+    public Article findArticleById(int article_id) {
+        return articleDao.findArticleById(article_id);
     }
 
 

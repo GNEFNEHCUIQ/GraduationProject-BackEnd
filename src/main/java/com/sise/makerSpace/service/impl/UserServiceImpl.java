@@ -97,8 +97,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Resume> getUserInfoByUserId(int user_id) {
-        return userDao.getUserInfoByUserId(user_id);
+    public Resume getUserResume(int user_id) {
+        return userDao.getUserResume(user_id);
     }
 
     @Override

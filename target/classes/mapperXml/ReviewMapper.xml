@@ -15,7 +15,7 @@
         select * from Review_create_team where teacher_id=#{teacher_id} and t_approved=0
     </select>
 
-    <select id="findATeachersAllCATA">
+    <select id="findATeachersAllCTA" resultType="ReviewCreateTeam">
         select * from Review_create_team where teacher_id=#{teacher_id}
     </select>
 
@@ -25,6 +25,18 @@
 
 
     <!--以下是运营人员的-->
+
+    <select id="findUnreviewedCTA" resultType="ReviewCreateTeam">
+        select * from Review_create_team where t_approved = 1 and h_approved=0
+    </select>
+
+    <update id="reviewCTA">
+        update Review_create_team set handler_id=#{handler_id} ,h_approved=#{h_approved} where review_id=#{review_id}
+    </update>
+
+    <select id="getCTAInfoByRid" resultType="ReviewCreateTeam">
+        select * from Review_create_team where review_id=#{review_id}
+    </select>
 
     <select id="findAllCATApplication" resultType="ReviewCertifiedAsTeacher">
         select * from Review_certified_as_teacher

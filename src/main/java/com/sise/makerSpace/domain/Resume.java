@@ -10,18 +10,18 @@ import org.springframework.stereotype.Repository;
 @AllArgsConstructor
 @Repository
 public class Resume {
-    private Integer resumeId;
-    private Integer userId;
-    private String realName;
+    private Integer resume_id;
+    private Integer user_id;
+    private String real_name;
     private String gender;
     private String birthday;
     private String phone;
     private String school;
     private String education;
     private String experience;
-    private String selfAssessment;
+    private String self_assessment;
 
-    private User user;
+    /*private User user;
 
     public Resume(User user) {
         this.user = user;
@@ -57,6 +57,6 @@ public class Resume {
 
     public void setName(String name) {
         user.setUser_name(name);
-    }
+    }*/
 
 }

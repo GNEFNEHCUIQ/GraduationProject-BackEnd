@@ -5,7 +5,7 @@
 <mapper namespace="com.sise.makerSpace.dao.RoleDao">
 
     <insert id="addSomeOnesRole">
-        insert into user_role(user_id,role_id,handling_time) values (#{applicant_id},#{role_id},now())
+        insert into user_role(user_id,role_id) values (#{user_id},#{role_id})
     </insert>
 
 </mapper>

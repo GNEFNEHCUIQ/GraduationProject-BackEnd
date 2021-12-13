@@ -22,19 +22,21 @@ public class ArticleBasicController {
 
     ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
 
-    /*@GetMapping(value = "/findAllArticleWithPage") //result：pageNum,pageSize,totalPages,totalSize
-    public PageResult findAllArticleWithPage(@RequestParam("pageNum") int pageNum,@RequestParam("pageSize") int pageSize){
-        PageRequest pageRequest=new PageRequest(pageNum,pageSize);
-        System.out.println("pageRequest"+pageRequest);
-        return articleService.findAllArticleWithPage(pageRequest);
-    }*/
-
     @GetMapping(value = "/findAllArticleWithPage") //result：pageNum,pageSize,totalPages,totalSize
+    public ReturnMsgUtils findAllArticleWithPage(@RequestParam("pageNum") int pageNum,@RequestParam("pageSize") int pageSize){
+        //System.out.println("pageNum:"+pageNum+"pageSize:"+pageSize);
+        PageRequest pageRequest=new PageRequest(pageNum,pageSize);
+        //System.out.println("pageRequest:"+pageRequest);
+        //System.out.println("pageRequest"+pageRequest);
+        return returnMsgUtils.setData(articleService.findAllArticleWithPage(pageRequest));
+    }
+
+    /*@GetMapping(value = "/findAllArticleWithPage") //result：pageNum,pageSize,totalPages,totalSize
     public ReturnMsgUtils findAllArticleWithPage(){
         PageRequest pageRequest=new PageRequest(1,10);
         System.out.println("pageRequest"+pageRequest);
         return returnMsgUtils.setData(  articleService.findAllArticleWithPage(pageRequest));
-    }
+    }*/
 
     @PostMapping(value = "/findArticleBySort")
     public PageResult findArticle(@RequestParam("sort")String sort, @RequestParam("pageNum") int pageNum, @RequestParam("pageSize") int pageSize){
@@ -42,6 +44,19 @@ public class ArticleBasicController {
         PageRequest pageRequest=new PageRequest(pageNum,pageSize);
         System.out.println("pageRequest"+pageRequest);
         return articleService.findArticle(sort,pageRequest);
+    }
+
+    @GetMapping("/searchArticle")
+    public ReturnMsgUtils searchArticle(@RequestParam("title")String title,
+                                        @RequestParam("pageNum") int pageNum,
+                                        @RequestParam("pageSize") int pageSize){
+        PageRequest pageRequest=new PageRequest(pageNum,pageSize);
+        return returnMsgUtils.setData(articleService.searchArticle(title,pageRequest));
+    }
+
+    @GetMapping("/findArticleById")
+    public ReturnMsgUtils findArticleById(@RequestParam("article_id")int article_id){
+        return returnMsgUtils.setData(articleService.findArticleById(article_id));
     }
 
 }

@@ -27,18 +27,18 @@ public class UserController {
 
     ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
 
-    @PostMapping(value = "/getUserInfoByUserId")   //完成
-    public ReturnMsgUtils getUserInfoByUserId(/*@RequestBody User user*/@RequestParam("userId")int userId){
-        List<Resume> resumeList=userService.getUserInfoByUserId(userId);
-        if (null==resumeList){
+    @GetMapping(value = "/getUserResume")   //完成
+    public ReturnMsgUtils getUserResume(Principal principal){
+        Resume resume=userService.getUserResume(userService.getUserByUserName(principal.getName()).getUser_id());
+        if (null==resume){
             return returnMsgUtils.fail("null");
         }else {
-            return returnMsgUtils.setData(resumeList);
+            return returnMsgUtils.setData(resume);
         }
     }
 
     @GetMapping("/getUserInfoByPrincipal")
-    public User getUserInfo(Principal principal){
+    public User getUserInfoByPrincipal(Principal principal){
         if (null==principal){
             return null;
         }
@@ -70,9 +70,9 @@ public class UserController {
         return returnMsgUtils.success("申请成功！正等待团队管理员审核。");
     }
 
-    @PostMapping("/logout")
+    /*@PostMapping("/logout")
     public ReturnMsgUtils logout(){
         return returnMsgUtils.success("注销成功");
-    }
+    }*/
 
 }

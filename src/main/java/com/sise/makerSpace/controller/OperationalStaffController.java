@@ -9,6 +9,8 @@ import com.sise.makerSpace.utils.ReturnMsgUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping(value = "/admin/operation")
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -30,6 +32,9 @@ public class OperationalStaffController {
 
     @Autowired
     private ItemService itemService;
+
+    @Autowired
+    private UserService userService;
 
     ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
 
@@ -57,11 +62,40 @@ public class OperationalStaffController {
         return returnMsgUtils.success("还没做！");
     }
 
+    @PutMapping("/reviewCTA")
+    public ReturnMsgUtils reviewCTA(@RequestParam("review_id")int review_id,
+                                    @RequestParam("h_approved")int h_approved,
+                                    Principal principal){
+        reviewService.reviewCTA(review_id,h_approved,userService.getUserByUserName(principal.getName()).getUser_id());
+        if (h_approved==-1){
+            return returnMsgUtils.success("操作成功！已拒绝该请求");
+        }else{
+            ReviewCreateTeam team_info=reviewService.getCTAInfoByRid(review_id);
+            System.out.println("team_info="+team_info);
+            teamService.addTeam(
+                    team_info.getTeam_name(),
+                    team_info.getCategory(),
+                    team_info.getTeacher_id(),
+                    team_info.getApplicant_id(),
+                    team_info.getTeam_describe());
+            teamService.addTeammenber(team_info.getApplicant_id(),teamService.getTeamIdByTeamName(team_info.getTeam_name()));
+            roleService.addSomeOnesRole(team_info.getApplicant_id(),6);
+            return returnMsgUtils.success("审核已通过！已创建团队"+team_info.getTeam_name());
+        }
+    }
+
     @GetMapping("/findAllCATApplication")
     public ReturnMsgUtils findAllCATApplication(){
         //Review_certified_as_teacher;
         //operationalStaffService.findAllCATApplication();
         return returnMsgUtils.setData(reviewService.findAllCATApplication());
+    }
+
+
+    @GetMapping("/findUnreviewedCTA")
+    public ReturnMsgUtils findUnreviewedCTA(){
+
+        return returnMsgUtils.setData(reviewService.findUnreviewedCTA());
     }
 
     @PutMapping(value = "/reviewCATApplication")
@@ -79,33 +113,12 @@ public class OperationalStaffController {
         }
     }
 
-    @GetMapping("/findUnreviewedCTA")   //一定要老师那边t_approved为-1才select进去
-    public ReturnMsgUtils findUnreviewedCTA(){
-        return returnMsgUtils.success("还没做！");
-    }
 
     @GetMapping("/findAllCTA")
     public ReturnMsgUtils findAllCTA(){
         return returnMsgUtils.success("还没做！");
     }
 
-    @PutMapping(value = "reviewCTA")
-    public ReturnMsgUtils reviewCTA(@RequestParam("review_id")int review_id,@RequestParam("handler_id")int handler_id,@RequestParam("h_approved")int approved) {
-        reviewService.reviewCTApplication(review_id,handler_id,approved);
-        if (approved == -1) {
-            //发消息说没通过？
-            return returnMsgUtils.success("审核成功！该用户未通过审核！");
-        } else {    //insert into team (team_name,category,teacher_id,leader_id,team_describe) values (1,2,3,4,5)
-            Team newTeam=teamService.getTeamInfoFromReviewId(review_id);
-            teamService.addTeam(
-                    newTeam.getTeam_name(),
-                    newTeam.getCategory(),
-                    newTeam.getTeacher_id(),
-                    newTeam.getLeader_id(),
-                    newTeam.getTeam_describe());
-            return returnMsgUtils.success("审批成功！已自动创建团队："+newTeam.getTeam_name());
-        }
-    }
 
     @GetMapping("/findUnreviewedCIA")
     public ReturnMsgUtils getUnreviewedCIA(){

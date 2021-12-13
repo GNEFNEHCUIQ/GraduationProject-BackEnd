@@ -37,4 +37,14 @@ public interface TeamService {
     void addManager(int team_id, int user_id);
 
     void delManager(int tm_id);
+
+    List<Team> getYourTeam(int user_id);
+
+    Integer getTeacherIdByRealName(String teacherRealName);
+
+    boolean checkTeamNameIfExist(String team_name);
+
+    int getTeamIdByTeamName(String team_name);
+
+    void addTeammenber(int user_id, int team_id);
 }

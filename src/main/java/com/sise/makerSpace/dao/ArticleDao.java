@@ -18,4 +18,8 @@ public interface ArticleDao {
     void delArticle(int article_id);
 
     Integer ifArticleExist(int article_id);
+
+    List<Article> searchArticle(String title);
+
+    Article findArticleById(int article_id);
 }

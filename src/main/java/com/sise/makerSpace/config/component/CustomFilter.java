@@ -35,7 +35,8 @@ public class CustomFilter implements FilterInvocationSecurityMetadataSource {
             if (antPathMatcher.match(menu.getUrl(),requestUrl)){
                 String[] strings=menu.getRoles().stream().map(Role::getRole_name).toArray(String[]::new);
                 System.out.println("strings:"+ Arrays.toString(strings));
-                return SecurityConfig.createList(strings);
+                return null;
+                //return SecurityConfig.createList(strings);
             }
         }
         System.out.println("我还是出来了");

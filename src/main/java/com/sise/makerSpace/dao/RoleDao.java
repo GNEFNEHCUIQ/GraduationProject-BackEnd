@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface RoleDao {
-    public void addSomeOnesRole(int applicant_id, int role_id);
+    void addSomeOnesRole(int user_id, int role_id);
 }
