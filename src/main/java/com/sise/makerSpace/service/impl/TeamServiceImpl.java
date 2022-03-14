@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TeamServiceImpl implements TeamService {
@@ -73,8 +74,8 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public void letJoinTeam(int team_id, int member_id) {
-        teamDao.letJoinTeam(team_id,member_id);
+    public void letJoinTeam(int team_id, int user_id) {
+        teamDao.letJoinTeam(team_id,user_id);
     }
 
     @Override
@@ -125,6 +126,16 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void addTeammenber(int user_id, int team_id) {
         teamDao.addTeammenber(user_id,team_id);
+    }
+
+    @Override
+    public int findTeacherByTid(int team_id) {
+        return teamDao.findTeacherByTid(team_id);
+    }
+
+    @Override
+    public List<Map<String, String>> getTeacherList() {
+        return teamDao.getTeacherList();
     }
 
 

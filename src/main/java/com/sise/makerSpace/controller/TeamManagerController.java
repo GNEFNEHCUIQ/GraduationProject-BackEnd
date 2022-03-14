@@ -4,17 +4,16 @@ import com.sise.makerSpace.domain.CompetitionTeam;
 import com.sise.makerSpace.domain.Item;
 import com.sise.makerSpace.domain.Team;
 import com.sise.makerSpace.domain.TeamMember;
-import com.sise.makerSpace.service.CompetitionService;
-import com.sise.makerSpace.service.ReviewService;
-import com.sise.makerSpace.service.TeamService;
+import com.sise.makerSpace.service.*;
 import com.sise.makerSpace.utils.ReturnMsgUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/team/manager")
+@RequestMapping(value = "/team/manage")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class TeamManagerController {
     @Autowired
@@ -23,7 +22,13 @@ public class TeamManagerController {
     private ReviewService reviewService;
 
     @Autowired
+    private RoleService roleService;
+
+    @Autowired
     private CompetitionService competitionService;
+
+    @Autowired
+            private UserService userService;
 
     ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
 
@@ -32,6 +37,7 @@ public class TeamManagerController {
             @RequestParam("applicant_team_id")int applicant_team_id,
             @RequestParam("item_name")String item_name,
             @RequestParam("item_describe")String item_describe){
+        ;
         teamService.applyToCreateItem(applicant_team_id,item_name,item_describe);
         return returnMsgUtils.success("申请成功！正等待回应！");
     }
@@ -45,13 +51,18 @@ public class TeamManagerController {
     @PutMapping("/reviewJoinTeamAppl")
     public ReturnMsgUtils reviewJoinTeamAppl(
             @RequestParam("review_id")int review_id,
-            @RequestParam("approved")int approved){
-        reviewService.reviewJoinTeamAppl(review_id,approved);
-        if (approved==-1){
+            @RequestParam("t_approved")int t_approved,
+            Principal principal){
+        int t_handler=userService.getUserByUserName(principal.getName()).getUser_id();
+
+        System.out.println("review_id:"+review_id+",t_approved:"+t_approved+",t_handler:"+t_handler);
+        reviewService.reviewJoinTeamAppl(review_id,t_approved,t_handler);
+        if (t_approved==-1){
             return returnMsgUtils.success("已拒绝该请求");
         }else {
-            TeamMember teamMember=getTidAndUidFromReview(review_id);
-            teamService.letJoinTeam(teamMember.getTeam_id(),teamMember.getMember_id());
+            TeamMember teamMember=reviewService.getTidAndUidFromReview(review_id);
+            teamService.letJoinTeam(teamMember.getTeam_id(),teamMember.getUser_id());
+            roleService.addSomeOnesRole(teamMember.getUser_id(),6);
             return returnMsgUtils.success("已接受该用户已加入团队！");
         }
     }
@@ -64,6 +75,12 @@ public class TeamManagerController {
     public ReturnMsgUtils modTeamInfo(@RequestBody Team team){
         return returnMsgUtils.success("还没做呢！");
     }
+
+    @GetMapping("/getJoinTeamReview")
+    public ReturnMsgUtils getJoinTeamReview(Principal principal){
+        return returnMsgUtils.setData(reviewService.getJoinTeamReview(userService.getUserByUserName(principal.getName()).getUser_id()));
+    }
+
 
     @PostMapping("/enterCompetition")
     public ReturnMsgUtils enterCompetition(@RequestBody CompetitionTeam competitionTeam){

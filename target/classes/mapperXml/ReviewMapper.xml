@@ -23,6 +23,18 @@
         update review_create_team set teacher_id=#{teacher_id} ,t_approved=#{approved},handling_time=now() where review_id=#{review_id}
     </update>
 
+    <select id="getUnreviewedCIAByTId" resultType="ReviewCreateItem">
+        select * from review_create_item where teacher_id=#{teacher_id} and t_approved=0
+    </select>
+
+    <select id="reviewTeacherCIA">
+        update review_create_item set t_approved=#{t_approved},handling_time=now() where review_id=#{review_id}
+    </select>
+
+    <select id="getJoinTeamReview" resultType="ReviewJoinTeam">
+        SELECT DISTINCT r.* FROM `review_join_team` r,teammember t  where t.team_id=t.team_id and t.user_id=#{user_id} and t_approved=0
+    </select>
+
 
     <!--以下是运营人员的-->
 
@@ -50,16 +62,24 @@
         update review_create_team set handler_id=#{handler_id} ,h_approved=#{h_approved},handling_time=now() where review_id=#{review_id}
     </update>
 
+    <select id="findUnreviewedCIA" resultType="ReviewCreateItem">
+        SELECT * FROM review_create_item where t_approved=1 and h_approved=0
+    </select>
+
     <update id="reviewCIA">
         update review_create_item set handler_id=#{handler_id} ,h_approved=#{h_approved},handling_time=now() where review_id=#{review_id}
     </update>
 
     <update id="reviewJoinTeamAppl">
-        update review_invite_join_team set user_id=#{user_id} ,approved=#{approved},handling_time=now() where review_id=#{review_id}
+        update review_join_team set t_handler=#{t_handler},t_approved=#{t_approved},handling_time=now() where review_id=#{review_id}
     </update>
 
     <select id="getTidAndUidFromReview" resultMap="TidAndUidMap">
-        select applicant_team_id as team_id,user_id from review_invite_join_team where review_id=#{review_id}
+        select applicant_id as user_id,team_id from review_join_team where review_id=#{review_id}
+    </select>
+
+    <select id="findUnreviewedCATA" resultType="ReviewCertifiedAsTeacher">
+        SELECT * FROM review_certified_as_teacher WHERE h_approved=0
     </select>
 
 </mapper>

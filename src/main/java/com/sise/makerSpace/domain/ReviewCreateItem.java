@@ -9,11 +9,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 @NoArgsConstructor
 @AllArgsConstructor
-public class Item {
-    private int item_id;
-    private int team_id;
+public class ReviewCreateItem {
+    private int review_id;
+    private int applicant_team_id;
     private String item_name;
-    private int item_status;
     private String item_describe;
+    private int teacher_id;
+    private int t_approved;
+    private int handler_id;
+    private int h_approved;
     private String creation_time;
+    private String handling_time;
 }

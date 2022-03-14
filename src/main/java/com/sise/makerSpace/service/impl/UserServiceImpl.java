@@ -1,10 +1,7 @@
 package com.sise.makerSpace.service.impl;
 
 import com.sise.makerSpace.config.JwtTokenConfig;
-import com.sise.makerSpace.domain.Menu;
-import com.sise.makerSpace.domain.Resume;
-import com.sise.makerSpace.domain.Role;
-import com.sise.makerSpace.domain.User;
+import com.sise.makerSpace.domain.*;
 import com.sise.makerSpace.dao.UserDao;
 import com.sise.makerSpace.service.UserService;
 import com.sise.makerSpace.utils.ReturnMsgUtils;
@@ -30,6 +27,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -76,11 +74,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void applyJoinTeam(String user_name, int team_id) {
-        userDao.applyJoinTeam(user_name,team_id);
+    public void applyJoinTeam(int user_id, int team_id) {
+        userDao.applyJoinTeam(user_id,team_id);
     }
-
-
 
 
     @Override
@@ -115,8 +111,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void certifiedAsTeacher(int user_id) {
-        userDao.certifiedAsTeacher(user_id);
+    public void certifiedAsTeacher(Teacher teacher) {
+        userDao.certifiedAsTeacher(teacher);
     }
 
     @Override
@@ -135,6 +131,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Role> getRoles(Integer user_id) {
         return userDao.getRoles(user_id);
+    }
+
+    @Override
+    public void updateUserResume(Resume resume) {
+        userDao.updateUserResume(resume);
     }
 
 }

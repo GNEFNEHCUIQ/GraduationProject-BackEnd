@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @AllArgsConstructor
 @Repository
 public class Resume {
-    private Integer resume_id;
+    /*private Integer resume_id;
     private Integer user_id;
     private String real_name;
     private String gender;
@@ -19,7 +19,19 @@ public class Resume {
     private String school;
     private String education;
     private String experience;
+    private String self_assessment;*/
+
+    private Integer resume_id;
+    private Integer user_id;
+    private String real_name;
+    private String gender;
+    private String birth;
+    private String phone;
     private String self_assessment;
+    private String major;
+    private String time_of_enrollment;
+    private String education;
+    private String experience;
 
     /*private User user;
 

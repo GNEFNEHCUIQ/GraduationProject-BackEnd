@@ -13,4 +13,18 @@ public interface ItemService {
     List<Item> findTeamAllItem(int team_id);
 
     ItemProgress findProgressById(int item_id);
+
+    List<Item> getYourItem(int user_id);
+
+    void createDemand(ItemProgress itemProgress);
+
+    List<ItemProgress> getItemProgress(int item_id);
+
+    void checkProgress(int progress_id);
+
+    void deleteProgress(int progress_id);
+
+    ItemProgress getOneProgressById(int progress_id);
+
+    void updateProgress(ItemProgress itemProgress);
 }

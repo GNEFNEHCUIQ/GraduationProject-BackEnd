@@ -1,6 +1,7 @@
 package com.sise.makerSpace.controller;
 
 import com.sise.makerSpace.domain.Resume;
+import com.sise.makerSpace.domain.Teacher;
 import com.sise.makerSpace.domain.Team;
 import com.sise.makerSpace.domain.User;
 import com.sise.makerSpace.service.ReviewService;
@@ -49,25 +50,33 @@ public class UserController {
         return user;
     }
 
-    @GetMapping(value = "/certifiedAsTeacher")
-    public ReturnMsgUtils certifiedAsTeacher(@RequestParam("user_id")int user_id){
-        if (userService.isTeacher(user_id)) {
-            System.out.println("userService.isTeacher(user_id)::"+userService.isTeacher(user_id));
+    @PostMapping("/certifiedAsTeacher")
+    public ReturnMsgUtils certifiedAsTeacher(@RequestBody Teacher teacher,Principal principal){
+        teacher.setUser_id(userService.getUserByUserName(principal.getName()).getUser_id());
+        if (userService.isTeacher(teacher.getUser_id())) {
+            System.out.println("userService.isTeacher(user_id)::"+userService.isTeacher(teacher.getUser_id()));
             return returnMsgUtils.fail("你已经是老师啦，无需重复认证");
-        }else if(userService.alreadyCommitTeacherApply(user_id)){
+        }else if(userService.alreadyCommitTeacherApply(teacher.getUser_id())){
             return returnMsgUtils.fail("你已提交申请，无需重复提交。");
         }
         else {
-            System.out.println("userService.isTeacher(user_id)::"+userService.isTeacher(user_id));
-            userService.certifiedAsTeacher(user_id);
+            System.out.println("提交成功 userService.isTeacher(user_id)::"+userService.isTeacher(teacher.getUser_id()));
+            userService.certifiedAsTeacher(teacher);
             return returnMsgUtils.success("申请提交成功");
         }
+        //return returnMsgUtils.success("success");
     }
 
     @PostMapping("/applyJoinTeam")
     public ReturnMsgUtils applyJoinTeam(Principal principal,@RequestParam("team_id")int team_id){
-        userService.applyJoinTeam(principal.getName(),team_id);
+        userService.applyJoinTeam(userService.getUserByUserName(principal.getName()).getUser_id(),team_id);
         return returnMsgUtils.success("申请成功！正等待团队管理员审核。");
+    }
+
+    @PutMapping("/updateUserResume")
+    public ReturnMsgUtils updateUserResume(@RequestBody Resume resume){
+        userService.updateUserResume(resume);
+        return returnMsgUtils.success("修改成功");
     }
 
     /*@PostMapping("/logout")

@@ -6,6 +6,7 @@ import com.sise.makerSpace.domain.TeamMember;
 import com.sise.makerSpace.utils.ReturnMsgUtils;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TeamService {
     List<TeamMember> findAllTeamMember(int team_id);
@@ -30,7 +31,7 @@ public interface TeamService {
 
     void inviteSBJoinTeam(int team_id, int user_id);
 
-    void letJoinTeam(int team_id, int member_id);
+    void letJoinTeam(int team_id, int user_id);
 
     void changeLeader(int team_id, int newLeader);
 
@@ -47,4 +48,8 @@ public interface TeamService {
     int getTeamIdByTeamName(String team_name);
 
     void addTeammenber(int user_id, int team_id);
+
+    int findTeacherByTid(int team_id);
+
+    List<Map<String, String>> getTeacherList();
 }

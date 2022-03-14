@@ -55,7 +55,7 @@ public class TeamBasicController {
     @GetMapping(value = "/getTeamInfoByTeamId")
     public ReturnMsgUtils getTeamInfo(@RequestParam("team_id")int team_id){
         //PageRequest pageRequest=new PageRequest(pageNum,pageSize);
-        return returnMsgUtils.setData(teamService.getTeamInfo(team_id));
+        return returnMsgUtils.setData(teamService.getTeamInfo(team_id),null);
     }
 
     @PostMapping(value = "/applyToCreateATeam")
@@ -83,6 +83,9 @@ public class TeamBasicController {
             }
 
     }
+
+    @GetMapping("/getTeacherList")
+    public ReturnMsgUtils getTeacherList(){return returnMsgUtils.setData(teamService.getTeacherList(),null);}
 
     @GetMapping("/findAllTeam")
     public ReturnMsgUtils findAllTeam(){

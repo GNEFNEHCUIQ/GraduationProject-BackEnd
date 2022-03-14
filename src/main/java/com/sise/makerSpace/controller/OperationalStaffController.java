@@ -14,6 +14,10 @@ import java.security.Principal;
 @RestController
 @RequestMapping(value = "/admin/operation")
 @CrossOrigin(origins = "*", maxAge = 3600)
+
+//CIA:创建项目申请
+//CTA:创建团队申请
+//CATA：验证教师申请
 public class OperationalStaffController {
     @Autowired
     private OperationalStaffService operationalStaffService;
@@ -57,9 +61,10 @@ public class OperationalStaffController {
         }
     }
 
-    @GetMapping(value = "/findUnreviewedCATA")
+    @GetMapping( "/findUnreviewedCATA")
     public ReturnMsgUtils findUnreviewedCATA(){
-        return returnMsgUtils.success("还没做！");
+        return returnMsgUtils.setData(reviewService.findUnreviewedCATA());
+        //return returnMsgUtils.success("成功！");
     }
 
     @PutMapping("/reviewCTA")
@@ -88,13 +93,12 @@ public class OperationalStaffController {
     public ReturnMsgUtils findAllCATApplication(){
         //Review_certified_as_teacher;
         //operationalStaffService.findAllCATApplication();
-        return returnMsgUtils.setData(reviewService.findAllCATApplication());
+        return returnMsgUtils.setData(reviewService.findAllCATApplication(),"");
     }
 
 
     @GetMapping("/findUnreviewedCTA")
     public ReturnMsgUtils findUnreviewedCTA(){
-
         return returnMsgUtils.setData(reviewService.findUnreviewedCTA());
     }
 
@@ -103,8 +107,8 @@ public class OperationalStaffController {
         reviewService.reviewCATApplication(
                 reviewCertifiedAsTeacher.getReview_id(),
                 reviewCertifiedAsTeacher.getHandler_id(),
-                reviewCertifiedAsTeacher.getApproved());
-        if (reviewCertifiedAsTeacher.getApproved()==-1){
+                reviewCertifiedAsTeacher.getH_approved());
+        if (reviewCertifiedAsTeacher.getH_approved()==-1){
             //发消息说没通过？
             return returnMsgUtils.success("审核成功！该用户未通过审核！");
         }else{
@@ -116,25 +120,26 @@ public class OperationalStaffController {
 
     @GetMapping("/findAllCTA")
     public ReturnMsgUtils findAllCTA(){
-        return returnMsgUtils.success("还没做！");
+        return returnMsgUtils.success("还没做！3.11");
     }
 
 
     @GetMapping("/findUnreviewedCIA")
-    public ReturnMsgUtils getUnreviewedCIA(){
-        return returnMsgUtils.success("还没做呢！哈哈！");
+    public ReturnMsgUtils findUnreviewedCIA(){
+        return returnMsgUtils.setData(reviewService.findUnreviewedCIA());
     }
 
     @GetMapping("/findAllCIA")
     public ReturnMsgUtils getAllCIA(){
-        return returnMsgUtils.success("还没做呢！哈哈！");
+
+        return returnMsgUtils.success("还没做呢！哈哈！3.11");
     }
 
     @PutMapping("/reviewCIA")
     public ReturnMsgUtils reviewCIA(@RequestParam("review_id")int review_id,
-                                    @RequestParam("handler_id")int handler_id,
-                                    @RequestParam("h_approved")int h_approved){
-        reviewService.reviewCIA(review_id,handler_id,h_approved);
+                                    @RequestParam("h_approved")int h_approved,
+                                    Principal principal){
+        reviewService.reviewCIA(review_id,userService.getUserByUserName(principal.getName()).getUser_id(),h_approved);
         if (h_approved==-1){
             //发消息说没通过？
             return returnMsgUtils.success("审核成功！该用户未通过审核！");

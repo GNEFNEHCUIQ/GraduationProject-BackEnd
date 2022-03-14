@@ -1,9 +1,6 @@
 package com.sise.makerSpace.service;
 
-import com.sise.makerSpace.domain.Menu;
-import com.sise.makerSpace.domain.Resume;
-import com.sise.makerSpace.domain.Role;
-import com.sise.makerSpace.domain.User;
+import com.sise.makerSpace.domain.*;
 import com.sise.makerSpace.utils.ReturnMsgUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +19,7 @@ public interface UserService {
 
     boolean isTeacher(int user_id);
 
-    void certifiedAsTeacher(int user_id);
+    void certifiedAsTeacher(Teacher teacher);
 
     boolean alreadyCommitTeacherApply(int user_id);
 
@@ -34,8 +31,9 @@ public interface UserService {
 
     ReturnMsgUtils login(String user_name, String password, HttpServletRequest request);
 
-    void applyJoinTeam(String user_name,int team_id);
+    void applyJoinTeam(int user_id,int team_id);
 
     List<Role> getRoles(Integer user_id);
 
+    void updateUserResume(Resume resume);
 }

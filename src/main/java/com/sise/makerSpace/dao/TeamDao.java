@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -34,7 +35,7 @@ public interface TeamDao {
 
     void inviteSBJointeam(int team_id, int user_id);
 
-    void letJoinTeam(int team_id, int member_id);
+    void letJoinTeam(int team_id, int user_id);
 
     void changeLeader(int team_id, int user_id);
 
@@ -53,4 +54,8 @@ public interface TeamDao {
     int getTeamIdByTeamName(String team_name);
 
     void addTeammenber(int user_id, int team_id);
+
+    int findTeacherByTid(int team_id);
+
+    List<Map<String, String>> getTeacherList();
 }

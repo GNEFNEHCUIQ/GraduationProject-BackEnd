@@ -1,8 +1,6 @@
 package com.sise.makerSpace.dao;
 
-import com.sise.makerSpace.domain.ReviewCertifiedAsTeacher;
-import com.sise.makerSpace.domain.ReviewCreateTeam;
-import com.sise.makerSpace.domain.TeamMember;
+import com.sise.makerSpace.domain.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -20,13 +18,13 @@ public interface ReviewDao {
 
     List<ReviewCertifiedAsTeacher> findAllCATApplication();
 
-    void reviewCATApplication(int review_id,int handler_id, int approved);
+    void reviewCATApplication(int review_id,int handler_id, int h_approved);
 
     void reviewCTApplication(int review_id, int handler_id, int approved);
 
     void reviewCIA(int review_id, int handler_id, int h_approved);
 
-    void reviewJoinTeamAppl(int review_id, int approved);
+    void reviewJoinTeamAppl(int review_id, int t_approved,int t_handler);
 
     TeamMember getTidAndUidFromReview(int review_id);
 
@@ -35,4 +33,15 @@ public interface ReviewDao {
     void reviewCTA(int review_id, int h_approved,int handler_id);
 
     ReviewCreateTeam getCTAInfoByRid(int review_id);
+
+    List<ReviewCreateItem> getUnreviewedCIAByTId(int teacher_id);
+
+    void reviewTeacherCIA(int review_id, int t_approved);
+
+    List<ReviewJoinTeam> getJoinTeamReview(int user_id);
+
+
+    List<ReviewCreateItem> findUnreviewedCIA();
+
+    List<ReviewCertifiedAsTeacher> findUnreviewedCATA();
 }

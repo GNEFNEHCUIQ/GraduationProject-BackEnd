@@ -4,6 +4,55 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sise.makerSpace.dao.ItemDao">
 
+    <resultMap id="baseItemMap" type="Item">
+        <id property="item_id" column="item_id"/>
+        <result property="team_id" column="team_id"/>
+        <result property="item_name" column="item_name"/>
+        <result property="item_status" column="item_status"/>
+        <result property="item_describe" column="item_describe"/>
+        <result property="creation_time" column="creation_time"/>
+    </resultMap>
+
+    <resultMap id="Items" type="ItemProgress">
+        <id property="progress_id" column="progress_id"/>
+        <result property="item_id" column="item_id"/>
+        <result property="demand" column="demand"/>
+        <result property="principal_id" column="principal_id"/>
+        <result property="priority" column="priority"/>
+        <result property="statue" column="statue"/>
+        <result property="progress_level" column="progress_level"/>
+        <result property="parent_item_id" column="parent_item_id"/>
+        <result property="progress_describe" column="progress_describe"/>
+        <result property="creation_time" column="creation_time"/>
+        <result property="handle_time" column="handle_time"/>
+            <collection property="children" ofType="ItemProgress">
+                <id property="progress_id" column="progress_id2"/>
+                <result property="item_id" column="item_id2"/>
+                <result property="demand" column="demand2"/>
+                <result property="principal_id" column="principal_id2"/>
+                <result property="priority" column="priority2"/>
+                <result property="statue" column="statue2"/>
+                <result property="progress_level" column="progress_level2"/>
+                <result property="parent_item_id" column="parent_item_id2"/>
+                <result property="progress_describe" column="progress_describe2"/>
+                <result property="creation_time" column="creation_time2"/>
+                <result property="handle_time" column="handle_time2"/>
+                    <collection property="children" ofType="ItemProgress">
+                        <id property="progress_id" column="progress_id3"/>
+                        <result property="item_id" column="item_id3"/>
+                        <result property="demand" column="demand3"/>
+                        <result property="principal_id" column="principal_id3"/>
+                        <result property="priority" column="priority3"/>
+                        <result property="statue" column="statue3"/>
+                        <result property="progress_level" column="progress_level3"/>
+                        <result property="parent_item_id" column="parent_item_id3"/>
+                        <result property="progress_describe" column="progress_describe3"/>
+                        <result property="creation_time" column="creation_time3"/>
+                        <result property="handle_time" column="handle_time3"/>
+                    </collection>
+            </collection>
+    </resultMap>
+
     <select id="getItemInfoFromReviewId" resultType="Item">
         select applicant_team_id as team_id,item_name,item_describe from review_create_item where review_id=#{review_id}
     </select>
@@ -12,11 +61,13 @@
         insert into item(
                         team_id,
                         item_name,
+                         item_status,
                         item_describe,
                         creation_time
         ) values(
                  #{team_id},
                  #{item_name},
+                 0,
                  #{item_describe},
                  now()
                         )
@@ -29,5 +80,89 @@
     <select id="findProgressById" resultType="ItemProgress">
         select * from item_progress where item_id=#{item_id}
     </select>
+
+    <select id="getYourItem" resultType="Item">
+        select
+            i.item_id as item_id,
+            i.team_id as team_id,
+            i.item_name as item_name,
+            i.item_status as item_status,
+            i.item_describe as item_describe,
+            i.creation_time as creation_time
+        from item i,teammember t where t.team_id=i.team_id and t.user_id=#{user_id}
+
+    </select>
+
+    <insert id="createDemand">
+        insert into item_progress(item_id,demand,principal_id,priority,statue,progress_level,parent_item_id,progress_describe,creation_time,handle_time)
+        values (#{item_id},#{demand},#{principal_id},#{priority},0,#{progress_level},#{parent_item_id},#{progress_describe},NOW(),NOW())
+    </insert>
+
+    <select id="getItemProgress" resultMap="Items">
+        SELECT
+            DISTINCT
+            i1.progress_id as progress_id,
+            i1.item_id as item_id,
+            i1.demand as demand,
+            i1.principal_id as principal_id,
+            i1.priority as priority,
+            i1.statue as statue,
+            i1.progress_id as progress_id,
+            i1.progress_level as progress_level,
+            i1.parent_item_id as parent_item_id,
+            i1.progress_describe as progress_describe,
+            i1.creation_time as creation_time,
+            i1.handle_time as handle_time,
+            i2.progress_id as progress_id2,
+            i2.item_id as item_id2,
+            i2.demand as demand2,
+            i2.principal_id as principal_id2,
+            i2.priority as priority2,
+            i2.statue as statue2,
+            i2.progress_id as progress_id2,
+            i2.progress_level as progress_level2,
+            i2.parent_item_id as parent_item_id2,
+            i2.progress_describe as progress_describe2,
+            i2.creation_time as creation_time2,
+            i2.handle_time as handle_time2,
+
+            i3.progress_id as progress_id3,
+            i3.item_id as item_id3,
+            i3.demand as demand3,
+            i3.principal_id as principal_id3,
+            i3.priority as priority3,
+            i3.statue as statue3,
+            i3.progress_id as progress_id3,
+            i3.progress_level as progress_level3,
+            i3.parent_item_id as parent_item_id3,
+            i3.progress_describe as progress_describe3,
+            i3.creation_time as creation_time3,
+            i3.handle_time as handle_time3
+        FROM
+            item_progress i1
+                LEFT JOIN item_progress i2 ON i2.parent_item_id = i1.progress_id
+                LEFT JOIN item_progress i3 ON i3.parent_item_id = i2.progress_id
+        WHERE
+            i1.item_id = #{item_id}
+          AND i1.progress_level = 1
+
+    </select>
+
+    <update id="checkProgress">
+        update item_progress set statue=1 where progress_id=#{progress_id}
+    </update>
+
+    <delete id="deleteProgress">
+        delete from item_progress where progress_id=#{progress_id}
+    </delete>
+
+    <select id="getOneProgressById" resultType="ItemProgress">
+        select * from item_progress where progress_id=#{progress_id}
+    </select>
+
+    <update id="updateProgress">
+        update item_progress set demand=#{demand},principal_id=#{principal_id},priority=#{priority},progress_describe=#{progress_describe},handle_time=NOW()
+            where progress_id=#{progress_id}
+    </update>
 
 </mapper>

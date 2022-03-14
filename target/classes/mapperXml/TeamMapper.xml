@@ -10,6 +10,11 @@
         <result property="team_id" column="team_id"/>
         <result property="role" column="role"/>
     </resultMap>
+    
+    <resultMap id="teacherInfoMap" type="Resume">
+        <id property="user_id" column="user_id" ></id>
+        <result property="real_name" column="real_name"/>
+    </resultMap>
 
     <select id="getYourTeam" resultType="java.lang.Integer">
         SELECT team_id FROM `teammember` where user_id=#{user_id}
@@ -127,13 +132,17 @@
         select * from item where team_id=#{team_id}
     </select>
 
+    <select id="findTeacherByTid">
+        select teacher_id from team where team_id=#{team_id}
+    </select>
+
     <insert id="inviteSBJointeam">
             insert into review_invite_join_team(applicant_team_id,user_id)
             values (#{team_id},#{user_id})
     </insert>
 
     <insert id="letJoinTeam">
-        insert into teammate(team_id,user_id) values (#{team_id},#{user_id})
+        insert into teammember(team_id,user_id) values (#{team_id},#{user_id})
     </insert>
 
     <update id="changeLeader">
@@ -147,5 +156,10 @@
     <delete id="delManager">
         delete from team_manager where tm_id=#{tm_id}
     </delete>
+
+    <select id="getTeacherList" resultMap="teacherInfoMap">
+        SELECT r.real_name,ur.user_id FROM user_role ur,resume r where ur.role_id=4 and ur.user_id=r.user_id
+    </select>
+
 
 </mapper>

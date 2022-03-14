@@ -1,9 +1,7 @@
 package com.sise.makerSpace.service.impl;
 
 import com.sise.makerSpace.dao.ReviewDao;
-import com.sise.makerSpace.domain.ReviewCertifiedAsTeacher;
-import com.sise.makerSpace.domain.ReviewCreateTeam;
-import com.sise.makerSpace.domain.TeamMember;
+import com.sise.makerSpace.domain.*;
 import com.sise.makerSpace.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +25,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void reviewCATApplication(int review_id,int handler_id, int approved) {
-        reviewDao.reviewCATApplication(review_id,handler_id,approved);
+    public void reviewCATApplication(int review_id,int handler_id, int h_approved) {
+        reviewDao.reviewCATApplication(review_id,handler_id,h_approved);
     }
 
     @Override
@@ -59,8 +57,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void reviewJoinTeamAppl(int review_id,  int approved) {
-        reviewDao.reviewJoinTeamAppl(review_id,approved);
+    public void reviewJoinTeamAppl(int review_id,  int t_approved,int t_handler) {
+        reviewDao.reviewJoinTeamAppl(review_id,t_approved,t_handler);
     }
 
     @Override
@@ -76,5 +74,30 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ReviewCreateTeam getCTAInfoByRid(int review_id) {
         return reviewDao.getCTAInfoByRid(review_id);
+    }
+
+    @Override
+    public List<ReviewCreateItem> getUnreviewedCIAByTId(int teacher_id) {
+        return reviewDao.getUnreviewedCIAByTId(teacher_id);
+    }
+
+    @Override
+    public void reviewTeacherCIA(int review_id, int t_approved) {
+        reviewDao.reviewTeacherCIA(review_id,t_approved);
+    }
+
+    @Override
+    public List<ReviewJoinTeam> getJoinTeamReview(int user_id) {
+        return reviewDao.getJoinTeamReview(user_id);
+    }
+
+    @Override
+    public List<ReviewCreateItem> findUnreviewedCIA() {
+        return reviewDao.findUnreviewedCIA();
+    }
+
+    @Override
+    public List<ReviewCertifiedAsTeacher> findUnreviewedCATA() {
+        return reviewDao.findUnreviewedCATA();
     }
 }

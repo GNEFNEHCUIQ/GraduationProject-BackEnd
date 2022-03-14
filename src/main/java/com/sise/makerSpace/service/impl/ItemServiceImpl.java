@@ -34,4 +34,39 @@ public class ItemServiceImpl implements ItemService {
     public ItemProgress findProgressById(int item_id) {
         return itemDao.findProgressById(item_id);
     }
+
+    @Override
+    public List<Item> getYourItem(int user_id) {
+        return itemDao.getYourItem(user_id);
+    }
+
+    @Override
+    public void createDemand(ItemProgress itemProgress) {
+        itemDao.createDemand(itemProgress);
+    }
+
+    @Override
+    public List<ItemProgress> getItemProgress(int item_id) {
+        return itemDao.getItemProgress(item_id);
+    }
+
+    @Override
+    public void checkProgress(int progress_id) {
+        itemDao.checkProgress(progress_id);
+    }
+
+    @Override
+    public void deleteProgress(int progress_id) {
+        itemDao.deleteProgress(progress_id);
+    }
+
+    @Override
+    public ItemProgress getOneProgressById(int progress_id) {
+        return itemDao.getOneProgressById(progress_id);
+    }
+
+    @Override
+    public void updateProgress(ItemProgress itemProgress) {
+        itemDao.updateProgress(itemProgress);
+    }
 }
