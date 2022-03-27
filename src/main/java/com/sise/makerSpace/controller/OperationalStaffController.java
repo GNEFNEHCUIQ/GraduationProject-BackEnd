@@ -42,13 +42,25 @@ public class OperationalStaffController {
 
     ReturnMsgUtils returnMsgUtils=new ReturnMsgUtils();
 
-    @PostMapping(value = "/addArticle")
-    public ReturnMsgUtils addArticle(@RequestParam("title") String title, @RequestParam("sort") String sort, @RequestParam("content") String content){
-        System.out.println("title:"+title+",sort:"+sort+",content:"+content);
-        int author=1;
+    @PostMapping("/addArticle")
+    public ReturnMsgUtils addArticle(@RequestParam("title") String title,
+                                     @RequestParam("sort") String sort,
+                                     @RequestParam("content") String content,
+                                     Principal principal){
+        /*System.out.println("title:"+title);*/
+        int author=userService.getUserByUserName(principal.getName()).getUser_id();
         articleService.addArticle(title,sort,content,author);
         return returnMsgUtils.success("文章发表成功！");
     }
+
+    /*@PutMapping(value = "/editArticle")
+    public ReturnMsgUtils editArticle(@RequestParam("article_id")int article_id,
+                                      @RequestParam("title") String title,
+                                     @RequestParam("sort") String sort,
+                                     @RequestParam("content") String content){
+        articleService.editArticle(article_id,title,sort,content);
+        return returnMsgUtils.success("文章修改成功！");
+    }*/
 
     @DeleteMapping (value = "/delArticle")
     public ReturnMsgUtils delArticle(@RequestParam("article_id")int article_id){

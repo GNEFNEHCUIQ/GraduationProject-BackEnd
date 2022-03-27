@@ -18,6 +18,7 @@
         <result property="item_id" column="item_id"/>
         <result property="demand" column="demand"/>
         <result property="principal_id" column="principal_id"/>
+        <result property="user_name" column="user_name"/>
         <result property="priority" column="priority"/>
         <result property="statue" column="statue"/>
         <result property="progress_level" column="progress_level"/>
@@ -30,6 +31,7 @@
                 <result property="item_id" column="item_id2"/>
                 <result property="demand" column="demand2"/>
                 <result property="principal_id" column="principal_id2"/>
+                <result property="user_name" column="user_name2"/>
                 <result property="priority" column="priority2"/>
                 <result property="statue" column="statue2"/>
                 <result property="progress_level" column="progress_level2"/>
@@ -42,6 +44,7 @@
                         <result property="item_id" column="item_id3"/>
                         <result property="demand" column="demand3"/>
                         <result property="principal_id" column="principal_id3"/>
+                        <result property="user_name" column="user_name3"/>
                         <result property="priority" column="priority3"/>
                         <result property="statue" column="statue3"/>
                         <result property="progress_level" column="progress_level3"/>
@@ -98,7 +101,7 @@
         values (#{item_id},#{demand},#{principal_id},#{priority},0,#{progress_level},#{parent_item_id},#{progress_describe},NOW(),NOW())
     </insert>
 
-    <select id="getItemProgress" resultMap="Items">
+    <!--<select id="getItemProgress" resultMap="Items">
         SELECT
             DISTINCT
             i1.progress_id as progress_id,
@@ -125,7 +128,6 @@
             i2.progress_describe as progress_describe2,
             i2.creation_time as creation_time2,
             i2.handle_time as handle_time2,
-
             i3.progress_id as progress_id3,
             i3.item_id as item_id3,
             i3.demand as demand3,
@@ -146,6 +148,59 @@
             i1.item_id = #{item_id}
           AND i1.progress_level = 1
 
+    </select>-->
+
+    <select id="getItemProgress" resultMap="Items">
+        SELECT DISTINCT
+            i1.progress_id AS progress_id,
+            i1.item_id AS item_id,
+            i1.demand AS demand,
+            i1.principal_id AS principal_id,
+            u1.user_name AS user_name,
+            i1.priority AS priority,
+            i1.statue AS statue,
+            i1.progress_id AS progress_id,
+            i1.progress_level AS progress_level,
+            i1.parent_item_id AS parent_item_id,
+            i1.progress_describe AS progress_describe,
+            i1.creation_time AS creation_time,
+            i1.handle_time AS handle_time,
+            i2.progress_id AS progress_id2,
+            i2.item_id AS item_id2,
+            i2.demand AS demand2,
+            i2.principal_id AS principal_id2,
+            u2.user_name AS user_name2,
+            i2.priority AS priority2,
+            i2.statue AS statue2,
+            i2.progress_id AS progress_id2,
+            i2.progress_level AS progress_level2,
+            i2.parent_item_id AS parent_item_id2,
+            i2.progress_describe AS progress_describe2,
+            i2.creation_time AS creation_time2,
+            i2.handle_time AS handle_time2,
+            i3.progress_id AS progress_id3,
+            i3.item_id AS item_id3,
+            i3.demand AS demand3,
+            i3.principal_id AS principal_id3,
+            u3.user_name AS user_name3,
+            i3.priority AS priority3,
+            i3.statue AS statue3,
+            i3.progress_id AS progress_id3,
+            i3.progress_level AS progress_level3,
+            i3.parent_item_id AS parent_item_id3,
+            i3.progress_describe AS progress_describe3,
+            i3.creation_time AS creation_time3,
+            i3.handle_time AS handle_time3
+        FROM
+            item_progress i1
+                LEFT JOIN item_progress i2 ON i2.parent_item_id = i1.progress_id
+                LEFT JOIN item_progress i3 ON i3.parent_item_id = i2.progress_id
+                LEFT JOIN USER u1 ON i1.principal_id = u1.user_id
+                LEFT JOIN USER u2 ON i2.principal_id = u2.user_id
+                LEFT JOIN USER u3 ON i3.principal_id = u3.user_id
+        WHERE
+            i1.item_id = 1
+          AND i1.progress_level = 1
     </select>
 
     <update id="checkProgress">

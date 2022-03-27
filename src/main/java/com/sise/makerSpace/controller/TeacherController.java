@@ -56,7 +56,8 @@ public class TeacherController {
     }
 
     @PutMapping("/reviewTeacherCIA")
-    public ReturnMsgUtils reviewTeacherCIA(@RequestParam("review_id")int review_id,@RequestParam("t_approved")int t_approved){
+    public ReturnMsgUtils reviewTeacherCIA(@RequestParam("review_id")int review_id,
+                                           @RequestParam("t_approved")int t_approved){
             reviewService.reviewTeacherCIA(review_id,t_approved);
         if (t_approved==-1){
             return returnMsgUtils.success("审核成功！已拒绝");

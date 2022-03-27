@@ -69,5 +69,10 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDao.findArticleById(article_id);
     }
 
+    @Override
+    public void editArticle(int article_id, String title, String sort, String content) {
+
+    }
+
 
 }

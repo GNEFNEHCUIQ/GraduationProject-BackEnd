@@ -37,7 +37,7 @@ public class ItemManagerController {
     @DeleteMapping("/deleteProgress")
     public ReturnMsgUtils deleteProgress(@RequestParam("progress_id")int progress_id){
         itemService.deleteProgress(progress_id);
-        return returnMsgUtils.success("已完成！");
+        return returnMsgUtils.success("已删除！");
     }
 
     @GetMapping("/getOneProgressById")

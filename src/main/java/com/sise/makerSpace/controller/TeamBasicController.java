@@ -62,7 +62,7 @@ public class TeamBasicController {
     public ReturnMsgUtils applyToCreateATeam(
             @RequestParam("team_name")String team_name,
             @RequestParam("category")String category,
-            @RequestParam("teacherRealName")String teacherRealName,
+            @RequestParam("teacherId")String teacherRealName,
             @RequestParam("teamDescribe")String teamDescribe,
             Principal principal){
         //重复检查

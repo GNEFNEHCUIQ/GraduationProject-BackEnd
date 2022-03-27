@@ -41,7 +41,7 @@
 
     <insert id="addArticle">
         insert into article(
-        <include refid="article" />
+        article_id,title,sort,content,author,creation_time
         ) values
         (null,#{sort},#{title},#{content},#{author},NOW())
     </insert>

@@ -1,7 +1,14 @@
 package com.sise.makerSpace.utils;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReturnMsgUtils implements Serializable {
     private Integer flag;
     private String message;
@@ -12,7 +19,7 @@ public class ReturnMsgUtils implements Serializable {
     public final static int NOT_LOGIN=401;
     public final static int PERMISSION_DENIED=403;
 
-    public ReturnMsgUtils() {
+    /*public ReturnMsgUtils() {
         this.flag = OK;
         this.message = "成功！";
     }
@@ -27,7 +34,7 @@ public class ReturnMsgUtils implements Serializable {
         this.flag = flag;
         this.message = message;
         this.data = data;
-    }
+    }*/
 
     public boolean isSuccess(){
         return this.flag == OK;
@@ -38,14 +45,14 @@ public class ReturnMsgUtils implements Serializable {
      * 构造个操作失败的返回接口
      * @param message
      */
-    public ReturnMsgUtils(String message){
+    /*public ReturnMsgUtils(String message){
         fail(message);
-    }
+    }*/
 
     /**
      * @param message
      */
-    public ReturnMsgUtils(int flag, String message){
+    /*public ReturnMsgUtils(int flag, String message){
         this.flag = flag;
         this.message = message;
     }
@@ -56,18 +63,14 @@ public class ReturnMsgUtils implements Serializable {
         this.message = "请先登录";
         this.data = null;
         return this;
-    }
+    }*/
 
     public  ReturnMsgUtils fail(String message){
-        this.flag = FAIL;
-        this.message = message;
-        return this;
+        return new ReturnMsgUtils(FAIL,message,null);
     }
 
     public ReturnMsgUtils success(String message){
-        this.flag = OK;
-        this.message = message;
-        return this;
+        return new ReturnMsgUtils(OK,message,null);
     }
 
     public Integer getFlag() {
@@ -100,14 +103,12 @@ public class ReturnMsgUtils implements Serializable {
     }
 
     public ReturnMsgUtils setData(Object data) {
-        this.data = data;
-        return this;
+        return new ReturnMsgUtils(OK,null,data);
     }
 
+
     public ReturnMsgUtils setData(Object data,String message) {
-        this.data = data;
-        this.message=message;
-        return this;
+        return new ReturnMsgUtils(OK,message,data);
     }
 
 }

@@ -55,9 +55,6 @@ public class UserServiceImpl implements UserService {
         UserDetails userDetails=userDetailsService.loadUserByUsername(user_name);
         String encode = passwordEncoder.encode(userDetails.getPassword());
         if (null==userDetails || !passwordEncoder.matches(password,encode)){
-            /*System.out.println("userDetails:"+userDetails);
-            System.out.println("password:"+password);
-            System.out.println("pencode:"+encode);*/
             System.out.println("passwordEncoder.matches:"+passwordEncoder.matches(password,userDetails.getPassword()));
             return returnMsgUtils.fail("用户名或密码不正确");
         }

@@ -37,7 +37,6 @@ public class TeamManagerController {
             @RequestParam("applicant_team_id")int applicant_team_id,
             @RequestParam("item_name")String item_name,
             @RequestParam("item_describe")String item_describe){
-        ;
         teamService.applyToCreateItem(applicant_team_id,item_name,item_describe);
         return returnMsgUtils.success("申请成功！正等待回应！");
     }
@@ -54,7 +53,6 @@ public class TeamManagerController {
             @RequestParam("t_approved")int t_approved,
             Principal principal){
         int t_handler=userService.getUserByUserName(principal.getName()).getUser_id();
-
         System.out.println("review_id:"+review_id+",t_approved:"+t_approved+",t_handler:"+t_handler);
         reviewService.reviewJoinTeamAppl(review_id,t_approved,t_handler);
         if (t_approved==-1){

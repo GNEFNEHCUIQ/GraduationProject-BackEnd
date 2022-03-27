@@ -20,6 +20,7 @@ public class ItemProgress {
     private int item_id;
     private String demand;
     private int principal_id;
+    private String user_name;
     private String priority;
     private int statue;
     private int progress_level;

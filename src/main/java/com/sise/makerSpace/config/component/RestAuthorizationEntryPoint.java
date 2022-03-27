@@ -25,7 +25,7 @@ public class RestAuthorizationEntryPoint implements AuthenticationEntryPoint {
         //拿到输出流
         PrintWriter out = response.getWriter();
         //未登录或失效
-        ReturnMsgUtils error=new ReturnMsgUtils(401,"未登录或用户信息过期，请重新登录！");
+        ReturnMsgUtils error=new ReturnMsgUtils(401,"未登录或用户信息过期，请重新登录！",null);
         //RespBean bean = RespBean.error("未登录或用户信息过期，请重新登录！");
         //bean.setCode(401);
         out.write(new ObjectMapper().writeValueAsString(error));

@@ -36,4 +36,5 @@ public interface UserService {
     List<Role> getRoles(Integer user_id);
 
     void updateUserResume(Resume resume);
+
 }

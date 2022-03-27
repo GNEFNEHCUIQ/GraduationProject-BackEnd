@@ -54,30 +54,40 @@ public class UserController {
     public ReturnMsgUtils certifiedAsTeacher(@RequestBody Teacher teacher,Principal principal){
         teacher.setUser_id(userService.getUserByUserName(principal.getName()).getUser_id());
         if (userService.isTeacher(teacher.getUser_id())) {
-            System.out.println("userService.isTeacher(user_id)::"+userService.isTeacher(teacher.getUser_id()));
+            System.out.println("userService.isTeacher(user_id)::"
+                    +userService.isTeacher(teacher.getUser_id()));
             return returnMsgUtils.fail("你已经是老师啦，无需重复认证");
         }else if(userService.alreadyCommitTeacherApply(teacher.getUser_id())){
             return returnMsgUtils.fail("你已提交申请，无需重复提交。");
         }
         else {
-            System.out.println("提交成功 userService.isTeacher(user_id)::"+userService.isTeacher(teacher.getUser_id()));
+            System.out.println("提交成功 userService.isTeacher(user_id)::"
+                    +userService.isTeacher(teacher.getUser_id()));
             userService.certifiedAsTeacher(teacher);
             return returnMsgUtils.success("申请提交成功");
         }
-        //return returnMsgUtils.success("success");
     }
 
     @PostMapping("/applyJoinTeam")
-    public ReturnMsgUtils applyJoinTeam(Principal principal,@RequestParam("team_id")int team_id){
-        userService.applyJoinTeam(userService.getUserByUserName(principal.getName()).getUser_id(),team_id);
+    public ReturnMsgUtils applyJoinTeam(Principal principal,
+                                        @RequestParam("team_id")int team_id){
+        userService.applyJoinTeam(
+                userService.getUserByUserName(principal.getName()).getUser_id(),team_id
+        );
         return returnMsgUtils.success("申请成功！正等待团队管理员审核。");
     }
 
-    @PutMapping("/updateUserResume")
-    public ReturnMsgUtils updateUserResume(@RequestBody Resume resume){
-        userService.updateUserResume(resume);
-        return returnMsgUtils.success("修改成功");
-    }
+    /**要修改捏*/
+    /*@PutMapping("/updateUserResume")
+    public ReturnMsgUtils updateUserResume(@RequestBody Resume resume,Principal principal){
+        if(userService.checkResumeOwner(resume.getUser_id(),
+                userService.getUserByUserName(principal.getName()).getUser_id())) {
+            userService.updateUserResume(resume);
+            return returnMsgUtils.success("修改成功");
+        }else {
+            return returnMsgUtils.fail("不是本人，无法操作");
+        }
+    }*/
 
     /*@PostMapping("/logout")
     public ReturnMsgUtils logout(){

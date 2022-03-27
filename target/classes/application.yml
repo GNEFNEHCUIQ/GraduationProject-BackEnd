@@ -36,8 +36,19 @@ spring:
       exclude: WEB-INF/**
     freemarker:
       cache: false    #页面不加载缓存，修改即时生效
+
   mvc:
     log-request-details: true
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 20MB
+      max-request-size: 25MB
+
+file:
+  upload-dir: ./uploads
 
 mybatis:
   type-aliases-package: com.sise.makerSpace.domain
@@ -49,6 +60,8 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     mapUnderscoreToCamelCase: false
+
+
 
 # pagehelper
 pagehelper:

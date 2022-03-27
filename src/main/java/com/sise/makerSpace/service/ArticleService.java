@@ -21,4 +21,6 @@ public interface ArticleService {
     PageResult searchArticle(String title,PageRequest pageRequest);
 
     Article findArticleById(int article_id);
+
+    void editArticle(int article_id, String title, String sort, String content);
 }

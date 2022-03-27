@@ -29,6 +29,7 @@ public class VisitorController {
                 request)
         );
     }*/
+
     @PostMapping("/login")
     public Object login(@RequestBody User user, HttpServletRequest request){
         return userService.login(user.getUser_name(),
@@ -43,9 +44,7 @@ public class VisitorController {
             return returnMsgUtils.fail("用户名已存在");
         } else {
             userService.register(user);
-            //createResumeByName(user.getName());
             userService.createResumeByName(user.getUsername());
-            //System.out.println("success");
             userService.initROU(user.getUsername());
             return returnMsgUtils.success("注册成功");
         }
